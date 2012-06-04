@@ -1,7 +1,7 @@
 package com.dasanjos.java.util;
 
-import java.util.Arrays;
 import java.util.Iterator;
+import java.util.Stack;
 
 /**
  * <p>
@@ -15,6 +15,14 @@ import java.util.Iterator;
 
 public class CombinationIterator<T> implements Iterator<T[]> {
 	private T[] array;
+
+	private T[] result;
+
+	private int size;
+
+	private int total;
+
+	private int current;
 
 	/**
 	 * Constructor to create an combination Iterator of all elements in array parameter
@@ -33,7 +41,9 @@ public class CombinationIterator<T> implements Iterator<T[]> {
 	 */
 	public CombinationIterator(T[] array, int size) {
 		this.array = array.clone();
-		//TODO
+		this.size = size;
+		this.total = (int) Math.pow(array.length, size);
+		this.current = 0;
 	}
 
 	/**
@@ -43,18 +53,38 @@ public class CombinationIterator<T> implements Iterator<T[]> {
 	 */
 	@Override
 	public T[] next() {
-		//TODO
-		return null;
+		char[] keys = convertBase(current++, array.length).toCharArray();
+		result = (T[]) new Object[size];
+		for (int i = 0; i < keys.length; i++) {
+			int numericValue = Character.getNumericValue(keys[i]);
+			result[i] = array[numericValue];
+		}
+		return result;
 	}
 
 	@Override
 	public boolean hasNext() {
-		//TODO
-		return false;
+		return (current < total);
 	}
 
 	@Override
 	public void remove() {
 		throw new UnsupportedOperationException();
 	}
+
+	private String convertBase(int decimalNumber, int base) {
+		Stack<Integer> stack = new Stack<Integer>();
+		while (decimalNumber >= base) {
+			stack.push(decimalNumber % base);
+			decimalNumber = decimalNumber / base;
+		}
+
+		//TODO switch to int[] and fill the left zeroes
+		String str = new String("" + decimalNumber);
+		while (!stack.isEmpty()) {
+			str = str + stack.pop();
+		}
+		return str;
+	}
+
 }
