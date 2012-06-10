@@ -8,6 +8,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import javax.xml.transform.TransformerException;
 
 import com.dasanjos.java.util.PermutationIterator;
+import com.dasanjos.java.util.PermutationWithRepetitionIterator;
 import com.dasanjos.java.util.Property;
 
 /**
@@ -102,7 +103,7 @@ public class ZebraPuzzle {
 	 * Sources:
 	 * * http://www.statisticshowto.com/calculators/permutation-calculator-and-combination-calculator/
 	 * * http://www.calculatorsoup.com/calculators/conversions/numberstowords.php
-	 *
+	 * 
 	 * </pre>
 	 * 
 	 * 
@@ -118,21 +119,21 @@ public class ZebraPuzzle {
 		for (int nr = 0; nr < housesNr; nr++) {
 			permIndex[nr] = nr;
 		}
-		// Generate all possible permutations of properties (propNr!)
-		PermutationIterator<Integer> permutator = new PermutationIterator<Integer>(permIndex);
-		List<Integer[]> permutations = new ArrayList<Integer[]>();
-		while (permutator.hasNext()) {
-			permutations.add(permutator.next());
+		// Generate all permutations without repetition of properties (propNr!)
+		PermutationIterator<Integer> propPermutator = new PermutationIterator<Integer>(permIndex);
+		List<Integer[]> propPermutations = new ArrayList<Integer[]>();
+		while (propPermutator.hasNext()) {
+			propPermutations.add(propPermutator.next());
 		}
 
-		Integer[] combIndex = new Integer[permutations.size()]; // Initialize array of possible combinations indexes
-		for (int nr = 0; nr < permutations.size(); nr++) {
-			combIndex[nr] = nr;
+		Integer[] solutionIndex = new Integer[propPermutations.size()]; // Initialize array of possible combinations indexes
+		for (int nr = 0; nr < propPermutations.size(); nr++) {
+			solutionIndex[nr] = nr;
 		}
-		// Generate all unique combinations of permutations
-		PermutationIterator<Integer> combinator = new PermutationIterator<Integer>(combIndex, housesNr);
-		while (combinator.hasNext()) {
-			Integer[] combination = combinator.next();
+		// Generate all permutations with repetition of previous permutations
+		PermutationWithRepetitionIterator<Integer> solPermutator = new PermutationWithRepetitionIterator<Integer>(solutionIndex, housesNr);
+		while (solPermutator.hasNext()) {
+			Integer[] solPermutation = solPermutator.next();
 
 			// Map this combination of Permutations to a Solution
 			Solution solution = new Solution(housesNr); // Initialize solution (Nr. of houses is same for each solution)
@@ -140,12 +141,12 @@ public class ZebraPuzzle {
 				solution.houses[nr] = new House(nr + 1, keys.size());
 			}
 			for (int nr = 0; nr < housesNr; nr++) {
-				Integer[] permutation = permutations.get(combination[nr]);
-				for (int k = 0; k < permutation.length; k++) {
-					solution.houses[nr].properties[k] = new Property(keys.get(k), Property.getValues(keys.get(k), properties).get(permutation[k]));
+				Integer[] propPermutation = propPermutations.get(solPermutation[nr]);
+				for (int k = 0; k < propPermutation.length; k++) {
+					String key = keys.get(nr);
+					solution.houses[k].properties[nr] = new Property(key, Property.getValues(key, properties).get(propPermutation[k]));
 				}
 			}
-			System.out.println(solution);
 			solutions.add(solution);
 		}
 		return solutions;
@@ -176,7 +177,7 @@ public class ZebraPuzzle {
 
 		@Override
 		public String toString() {
-			return "Position:" + position + " " + Arrays.toString(properties);
+			return "House" + position + " " + Arrays.toString(properties);
 		}
 	}
 

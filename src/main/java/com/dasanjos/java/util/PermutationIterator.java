@@ -5,7 +5,8 @@ import java.util.Iterator;
 
 /**
  * <p>
- * <a href="http://stackoverflow.com/questions/2799078/permutation-algorithm-without-recursion-java">Generic permutation enumerator</a>
+ * <a href="http://stackoverflow.com/questions/2799078/permutation-algorithm-without-recursion-java">Permutation (without repetition) enumerator</a> <br/>
+ * (where order of elements matter and elements can not be repeated)
  * </p>
  * 
  * <pre>

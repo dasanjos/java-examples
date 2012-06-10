@@ -1,11 +1,10 @@
 package com.dasanjos.java;
 
+import static junit.framework.Assert.assertEquals;
+
 import java.util.ArrayList;
 import java.util.List;
 
-import junit.framework.Assert;
-
-import org.junit.Ignore;
 import org.junit.Test;
 
 import com.dasanjos.java.ZebraPuzzle.Solution;
@@ -16,17 +15,15 @@ import com.dasanjos.java.util.Property;
  */
 public class ZebraPuzzleTest {
 
-	@Ignore
-	public void generateSolutionsTwoHousesOneProperty() {
+	@Test
+	public void generateSolutionsOneHousesOneProperty() {
 		ZebraPuzzle zebraPuzzle = new ZebraPuzzle();
 		List<Property> properties = new ArrayList<Property>();
 		properties.add(new Property("nationality", "Norwegian"));
-		properties.add(new Property("nationality", "Ukrainian"));
 
-		List<Solution> s = zebraPuzzle.generateSolutions(2, properties);
-		Assert.assertEquals(2, s.size()); // 2 * 1!
-		Assert.assertEquals("[Position:1 [nationality:Norwegian], Position:2 [nationality:Ukrainian]]", s.get(0).toString());
-		Assert.assertEquals("[Position:1 [nationality:Ukrainian], Position:2 [nationality:Norwegian]]", s.get(1).toString());
+		List<Solution> s = zebraPuzzle.generateSolutions(1, properties);
+		assertEquals(1, s.size()); // 1! ^ 1
+		assertEquals("[House1 [nationality:Norwegian]]", s.get(0).toString());
 	}
 
 	@Test
@@ -35,47 +32,15 @@ public class ZebraPuzzleTest {
 		List<Property> properties = new ArrayList<Property>();
 		properties.add(new Property("nationality", "Norwegian"));// 0
 		properties.add(new Property("nationality", "Ukrainian"));// 1
-		properties.add(new Property("color", "Red")); // 0
-		properties.add(new Property("color", "Blue"));// 1
+		properties.add(new Property("color", "Red")); // A
+		properties.add(new Property("color", "Blue"));// B
 
 		List<Solution> s = zebraPuzzle.generateSolutions(2, properties);
-		Assert.assertEquals(2, s.size()); // 2 * 2!
-		Assert.assertEquals("[Position:1 [color:Blue, nationality:Ukrainian], Position:2 [color:Red, nationality:Norwegian]]", s.get(0).toString()); // 11-00
-		Assert.assertEquals("[Position:1 [color:Red, nationality:Norwegian], Position:2 [color:Blue, nationality:Ukrainian]]", s.get(1).toString()); // 00-11
-		Assert.assertEquals("[Position:1 [color:Blue, nationality:Norwegian], Position:2 [color:Red, nationality:Ukrainian]]", s.get(2).toString()); // 10-01
-		Assert.assertEquals("[Position:1 [color:Red, nationality:Ukrainian], Position:2 [color:Blue, nationality:Norwegian]]", s.get(3).toString()); // 01-10
-	}
-
-	@Ignore
-	public void generateSolutionsTwoHousesThreeProperties() {
-		ZebraPuzzle zebraPuzzle = new ZebraPuzzle();
-		List<Property> properties = new ArrayList<Property>();
-		properties.add(new Property("nationality", "Norwegian"));
-		properties.add(new Property("nationality", "Ukrainian"));
-		properties.add(new Property("color", "Yellow"));
-		properties.add(new Property("color", "Blue"));
-		properties.add(new Property("drink", "Water"));
-		properties.add(new Property("drink", "Tea"));
-
-		List<Solution> solutions = zebraPuzzle.generateSolutions(2, properties);
-		Assert.assertEquals(12, solutions.size()); // 2 * 3!
-	}
-
-	@Ignore
-	public void generateSolutionsTwoHousesFourProperties() {
-		ZebraPuzzle zebraPuzzle = new ZebraPuzzle();
-		List<Property> properties = new ArrayList<Property>();
-		properties.add(new Property("nationality", "Norwegian"));
-		properties.add(new Property("nationality", "Ukrainian"));
-		properties.add(new Property("color", "Yellow"));
-		properties.add(new Property("color", "Blue"));
-		properties.add(new Property("drink", "Water"));
-		properties.add(new Property("drink", "Tea"));
-		properties.add(new Property("smoke", "Kools"));
-		properties.add(new Property("smoke", "Chesterfields"));
-
-		List<Solution> solutions = zebraPuzzle.generateSolutions(2, properties);
-		Assert.assertEquals(48, solutions.size());// 2 * 4!
+		assertEquals(4, s.size()); // 2 * 2!
+		assertEquals("[House1 [color:Blue, nationality:Norwegian], House2 [color:Red, nationality:Ukrainian]]", s.get(0).toString()); // 10-01
+		assertEquals("[House1 [color:Blue, nationality:Ukrainian], House2 [color:Red, nationality:Norwegian]]", s.get(1).toString()); // 11-00
+		assertEquals("[House1 [color:Red, nationality:Norwegian], House2 [color:Blue, nationality:Ukrainian]]", s.get(2).toString()); // 00-11
+		assertEquals("[House1 [color:Red, nationality:Ukrainian], House2 [color:Blue, nationality:Norwegian]]", s.get(3).toString()); // 01-10
 	}
 
 	@Test
@@ -93,6 +58,36 @@ public class ZebraPuzzleTest {
 		properties.add(new Property("drink", "Milk"));
 
 		List<Solution> solutions = zebraPuzzle.generateSolutions(3, properties);
-		Assert.assertEquals(120, solutions.size()); // 3 * 3!
+		assertEquals(216, solutions.size()); // 3! ^ 3
 	}
+
+	@Test
+	public void generateSolutionsThreeHousesThreeProperties0() {
+		ZebraPuzzle zebraPuzzle = new ZebraPuzzle();
+		List<Property> properties = new ArrayList<Property>();
+		properties.add(new Property("n", "N"));
+		properties.add(new Property("n", "U"));
+		properties.add(new Property("n", "E"));
+		properties.add(new Property("c", "Y"));
+		properties.add(new Property("c", "B"));
+		properties.add(new Property("c", "R"));
+		properties.add(new Property("d", "W"));
+		properties.add(new Property("d", "T"));
+		properties.add(new Property("d", "M"));
+
+		List<Solution> s = zebraPuzzle.generateSolutions(3, properties);
+		assertEquals(216, s.size()); // 3! ^ 3
+		int i = 0;
+		assertEquals("[House1 [c:B, d:M, n:E], House2 [c:R, d:T, n:N], House3 [c:Y, d:W, n:U]]", s.get(i++).toString());
+		assertEquals("[House1 [c:B, d:M, n:E], House2 [c:R, d:T, n:U], House3 [c:Y, d:W, n:N]]", s.get(i++).toString());
+		assertEquals("[House1 [c:B, d:M, n:N], House2 [c:R, d:T, n:E], House3 [c:Y, d:W, n:U]]", s.get(i++).toString());
+		assertEquals("[House1 [c:B, d:M, n:N], House2 [c:R, d:T, n:U], House3 [c:Y, d:W, n:E]]", s.get(i++).toString());
+		assertEquals("[House1 [c:B, d:M, n:U], House2 [c:R, d:T, n:N], House3 [c:Y, d:W, n:E]]", s.get(i++).toString());
+		assertEquals("[House1 [c:B, d:M, n:U], House2 [c:R, d:T, n:E], House3 [c:Y, d:W, n:N]]", s.get(i++).toString());
+		assertEquals("[House1 [c:B, d:M, n:E], House2 [c:R, d:W, n:N], House3 [c:Y, d:T, n:U]]", s.get(i++).toString());
+		assertEquals("[House1 [c:B, d:M, n:E], House2 [c:R, d:W, n:U], House3 [c:Y, d:T, n:N]]", s.get(i++).toString());
+		assertEquals("[House1 [c:B, d:M, n:N], House2 [c:R, d:W, n:E], House3 [c:Y, d:T, n:U]]", s.get(i++).toString());
+		assertEquals("[House1 [c:B, d:M, n:N], House2 [c:R, d:W, n:U], House3 [c:Y, d:T, n:E]]", s.get(i++).toString());
+	}
+
 }
