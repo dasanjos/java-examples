@@ -5,9 +5,9 @@ import java.util.Collections;
 import java.util.List;
 
 public class Property {
-	private String key;
+	private final String key;
 
-	private String value;
+	private final String value;
 
 	public Property(String key, String value) {
 		this.key = key;
@@ -18,16 +18,8 @@ public class Property {
 		return key;
 	}
 
-	public void setKey(String key) {
-		this.key = key;
-	}
-
 	public String getValue() {
 		return value;
-	}
-
-	public void setValue(String value) {
-		this.value = value;
 	}
 
 	public static List<String> getUniqueKeys(List<Property> properties) {
@@ -58,14 +50,12 @@ public class Property {
 	}
 
 	@Override
-	public boolean equals(Object obj) {
-		// TODO Auto-generated method stub
-		return super.equals(obj);
+	public boolean equals(Object o) {
+		return (o != null && o instanceof Property && getKey().equals(((Property) o).getKey()) && getValue().equals(((Property) o).getValue()));
 	}
 
 	@Override
 	public int hashCode() {
-		// TODO Auto-generated method stub
-		return super.hashCode();
+		return getKey().hashCode() ^ getValue().hashCode();
 	}
 }
