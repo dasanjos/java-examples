@@ -51,11 +51,11 @@ public class Property {
 
 	@Override
 	public boolean equals(Object o) {
-		return (o != null && o instanceof Property && getKey().equals(((Property) o).getKey()) && getValue().equals(((Property) o).getValue()));
+		return (o != null && o instanceof Property && key.equals(((Property) o).key) && value.equals(((Property) o).value));
 	}
 
 	@Override
 	public int hashCode() {
-		return getKey().hashCode() ^ getValue().hashCode();
+		return key.hashCode() ^ value.hashCode();
 	}
 }

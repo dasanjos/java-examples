@@ -1,44 +1,22 @@
 package com.dasanjos.java;
 
+import java.io.File;
+import java.io.FileNotFoundException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
-import javax.xml.parsers.ParserConfigurationException;
-import javax.xml.transform.TransformerException;
-
-import com.dasanjos.java.util.PermutationIterator;
-import com.dasanjos.java.util.PermutationWithRepetitionIterator;
 import com.dasanjos.java.util.Property;
+import com.dasanjos.java.util.file.CSVReader;
+import com.dasanjos.java.util.math.PermutationIterator;
+import com.dasanjos.java.util.math.PermutationWithRepetitionIterator;
 
 /**
  * <p>
  * Java implementation of <a href="http://en.wikipedia.org/wiki/Zebra_Puzzle"> Zebra Puzzle</a> (also called Einstein's Puzzle)
  * </p>
  * 
- * <b>Definition:</b>
- * 
- * <pre>
- * - There are five houses.
- * - The Englishman lives in the red house.
- * - The Spaniard owns the dog.
- * - Coffee is drunk in the green house.
- * - The Ukrainian drinks tea.
- * - The green house is immediately to the right of the ivory house.
- * - The Old Gold smoker owns snails.
- * - Kools are smoked in the yellow house.
- * - Milk is drunk in the middle house.
- * - The Norwegian lives in the first house.
- * - The man who smokes Chesterfields lives in the house next to the man with the fox.
- * - Kools are smoked in the house next to the house where the horse is kept. [should be "... a house ...", see discussion below]
- * - The Lucky Strike smoker drinks orange juice.
- * - The Japanese smokes Parliaments.
- * - The Norwegian lives next to the blue house.
- * 
- * Now, who drinks water? Who owns the zebra? In the interest of clarity, it must be added that each of the five houses is painted a different color, and their inhabitants are of different national extractions, own different pets, drink different beverages and smoke different brands of American cigarets [sic]. One other thing: in statement 6, right means your right.
- * </pre>
- * 
- * <b>Input file (input.csv)</b> <br />
+ * <b>Example input file (input.csv)</b> <br />
  * 
  * <pre>
  * 5
@@ -75,48 +53,59 @@ import com.dasanjos.java.util.Property;
  * </pre>
  */
 public class ZebraPuzzle {
-	public static void main(String[] args) throws ParserConfigurationException, TransformerException {
-		// readNrHouses
-		// ReadRules
-		// CalculateUniqueProperties
-		// generateSolutions
-		// validateSolutions
+
+	int houses;
+
+	List<Property> properties;
+
+	List<Rule> rules;
+
+	public ZebraPuzzle(File input) throws FileNotFoundException {
+		this(new CSVReader(input, ","));
+	}
+
+	public ZebraPuzzle(CSVReader reader) {
+		properties = new ArrayList<Property>();
+		rules = new ArrayList<Rule>();
+		parseInputCSV(reader);
 	}
 
 	/**
-	 * <p>
-	 * Generate all possible solutions based on the number of houses (rows) and number of unique properties (columns)
-	 * </p>
-	 * Assuming that Number of Houses is equal to Number of Keys and Values for each Key, this formula describe the number of possible solutions:
+	 * Parse input values and generate internal lists of unique Properties for solution generation and Rules for solution validation
 	 * 
-	 * <pre>
-	 * Number of Solutions is the Number of combinations with size [number of houses] of properties permutations
-	 * Number of properties permutations => PermNr = HouseNr! 
-	 * Number of Solutions = SolNr = PermNr! ^ HouseNr!
-	 * 
-	 * For houseNr = 2 -> PermNr =   2 and SolNr =                       4
-	 * For houseNr = 3 -> PermNr =   6 and SolNr =                     216 (hundreds) 
-	 * For houseNr = 4 -> PermNr =  24 and SolNr =                 331,776 (thousands)
-	 * For houseNr = 5 -> PermNr = 120 and SolNr =          24,883,200,000 (billions) 
-	 * For houseNr = 6 -> PermNr = 720 and SolNr = 139,314,069,504,000,000 (quadrillions)
-	 * 
-	 * Sources:
-	 * * http://www.statisticshowto.com/calculators/permutation-calculator-and-combination-calculator/
-	 * * http://www.calculatorsoup.com/calculators/conversions/numberstowords.php
-	 * 
-	 * </pre>
-	 * 
-	 * 
-	 * @param housesNr number of columns (integer)
-	 * @param properties list of {@link Property} key value pairs (String)
-	 * @return List of all possible solutions
+	 * @param input CSV File with Zebra Puzzle input content
 	 */
-	public List<Solution> generateSolutions(int housesNr, List<Property> properties) {
+	private void parseInputCSV(CSVReader reader) {
+		List<String> values;
+
+		// Read Number of Houses
+		values = reader.readLine();
+		this.houses = Integer.parseInt(values.get(0));
+
+		// Read Rules and Calculate Unique Properties
+		while ((values = reader.readLine()) != null) {
+			int i = 0;
+			Rule rule = new Rule(RelativePosition.valueOf(values.get(i++)));
+			while (i < values.size()) {
+				Property property = new Property(values.get(i++), values.get(i++));
+				rule.addProperty(property);
+				if (!properties.contains(property)) {
+					properties.add(property);
+				}
+			}
+			rules.add(rule);
+		}
+	}
+
+	/**
+	 * Generate all possible solutions based on the number of houses (rows) and number of unique properties (columns)
+	 */
+	public List<Solution> generateSolutions() {
 		List<Solution> solutions = new ArrayList<ZebraPuzzle.Solution>();
 		List<String> keys = Property.getUniqueKeys(properties);
 
-		Integer[] permIndex = new Integer[housesNr]; // Initialize array of possible permutations indexes
-		for (int nr = 0; nr < housesNr; nr++) {
+		Integer[] permIndex = new Integer[houses]; // Initialize array of possible permutations indexes
+		for (int nr = 0; nr < houses; nr++) {
 			permIndex[nr] = nr;
 		}
 		// Generate all permutations without repetition of properties (propNr!)
@@ -131,16 +120,16 @@ public class ZebraPuzzle {
 			solutionIndex[nr] = nr;
 		}
 		// Generate all permutations with repetition of previous permutations
-		PermutationWithRepetitionIterator<Integer> solPermutator = new PermutationWithRepetitionIterator<Integer>(solutionIndex, housesNr);
+		PermutationWithRepetitionIterator<Integer> solPermutator = new PermutationWithRepetitionIterator<Integer>(solutionIndex, houses);
 		while (solPermutator.hasNext()) {
 			Integer[] solPermutation = solPermutator.next();
 
 			// Map this combination of Permutations to a Solution
-			Solution solution = new Solution(housesNr); // Initialize solution (Nr. of houses is same for each solution)
-			for (int nr = 0; nr < housesNr; nr++) {
+			Solution solution = new Solution(houses); // Initialize solution (Nr. of houses is same for each solution)
+			for (int nr = 0; nr < houses; nr++) {
 				solution.houses[nr] = new House(nr + 1, keys.size());
 			}
-			for (int nr = 0; nr < housesNr; nr++) {
+			for (int nr = 0; nr < houses; nr++) {
 				Integer[] propPermutation = propPermutations.get(solPermutation[nr]);
 				for (int k = 0; k < propPermutation.length; k++) {
 					String key = keys.get(nr);
@@ -150,6 +139,31 @@ public class ZebraPuzzle {
 			solutions.add(solution);
 		}
 		return solutions;
+	}
+
+	// TODO Add Comment
+	private List<Solution> getValidSolutions(List<Solution> possibleSolutions) {
+		List<Solution> solutions = new ArrayList<ZebraPuzzle.Solution>();
+
+		return solutions;
+	}
+
+	public static void main(String[] args) throws FileNotFoundException {
+		// TODO Validate args for paramenters (filepaths) input.csv and output.xml
+		File input = new File(args[0]);
+
+		// Parse Input
+		ZebraPuzzle puzzle = new ZebraPuzzle(input);
+
+		// Generate all Possible Solutions
+		List<Solution> possibleSolutions = puzzle.generateSolutions();
+
+		// validateSolutions
+		List<Solution> solutions = puzzle.getValidSolutions(possibleSolutions);
+
+		for (Solution solution : solutions) {
+			System.out.println(solution);
+		}
 	}
 
 	public class Solution {
@@ -182,9 +196,18 @@ public class ZebraPuzzle {
 	}
 
 	public class Rule {
-		RelativePosition position;
+		final RelativePosition position;
 
-		List<Property> properties;
+		final List<Property> properties;
+
+		public Rule(RelativePosition position) {
+			this.position = position;
+			this.properties = new ArrayList<Property>();
+		}
+
+		public void addProperty(Property property) {
+			this.properties.add(property);
+		}
 	}
 
 	public enum RelativePosition {
