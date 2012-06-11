@@ -2,18 +2,14 @@ package com.dasanjos.java;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 
-import com.dasanjos.java.util.Property;
-import com.dasanjos.java.util.file.CSVReader;
-import com.dasanjos.java.util.math.PermutationIterator;
-import com.dasanjos.java.util.math.PermutationWithRepetitionIterator;
+import com.dasanjos.java.zebraPuzzle.BruteForceSolver;
+import com.dasanjos.java.zebraPuzzle.model.PuzzleSolution;
 
 /**
  * <p>
- * Java implementation of <a href="http://en.wikipedia.org/wiki/Zebra_Puzzle"> Zebra Puzzle</a> (also called Einstein's Puzzle)
+ * Java brute-force implementation of <a href="http://en.wikipedia.org/wiki/Zebra_Puzzle"> Zebra Puzzle</a> (also called Einstein's Puzzle)
  * </p>
  * 
  * <b>Example input file (input.csv)</b> <br />
@@ -54,163 +50,21 @@ import com.dasanjos.java.util.math.PermutationWithRepetitionIterator;
  */
 public class ZebraPuzzle {
 
-	int houses;
-
-	List<Property> properties;
-
-	List<Rule> rules;
-
-	public ZebraPuzzle(File input) throws FileNotFoundException {
-		this(new CSVReader(input, ","));
-	}
-
-	public ZebraPuzzle(CSVReader reader) {
-		properties = new ArrayList<Property>();
-		rules = new ArrayList<Rule>();
-		parseInputCSV(reader);
-	}
-
-	/**
-	 * Parse input values and generate internal lists of unique Properties for solution generation and Rules for solution validation
-	 * 
-	 * @param input CSV File with Zebra Puzzle input content
-	 */
-	private void parseInputCSV(CSVReader reader) {
-		List<String> values;
-
-		// Read Number of Houses
-		values = reader.readLine();
-		this.houses = Integer.parseInt(values.get(0));
-
-		// Read Rules and Calculate Unique Properties
-		while ((values = reader.readLine()) != null) {
-			int i = 0;
-			Rule rule = new Rule(RelativePosition.valueOf(values.get(i++)));
-			while (i < values.size()) {
-				Property property = new Property(values.get(i++), values.get(i++));
-				rule.addProperty(property);
-				if (!properties.contains(property)) {
-					properties.add(property);
-				}
-			}
-			rules.add(rule);
-		}
-	}
-
-	/**
-	 * Generate all possible solutions based on the number of houses (rows) and number of unique properties (columns)
-	 */
-	public List<Solution> generateSolutions() {
-		List<Solution> solutions = new ArrayList<ZebraPuzzle.Solution>();
-		List<String> keys = Property.getUniqueKeys(properties);
-
-		Integer[] permIndex = new Integer[houses]; // Initialize array of possible permutations indexes
-		for (int nr = 0; nr < houses; nr++) {
-			permIndex[nr] = nr;
-		}
-		// Generate all permutations without repetition of properties (propNr!)
-		PermutationIterator<Integer> propPermutator = new PermutationIterator<Integer>(permIndex);
-		List<Integer[]> propPermutations = new ArrayList<Integer[]>();
-		while (propPermutator.hasNext()) {
-			propPermutations.add(propPermutator.next());
-		}
-
-		Integer[] solutionIndex = new Integer[propPermutations.size()]; // Initialize array of possible combinations indexes
-		for (int nr = 0; nr < propPermutations.size(); nr++) {
-			solutionIndex[nr] = nr;
-		}
-		// Generate all permutations with repetition of previous permutations
-		PermutationWithRepetitionIterator<Integer> solPermutator = new PermutationWithRepetitionIterator<Integer>(solutionIndex, houses);
-		while (solPermutator.hasNext()) {
-			Integer[] solPermutation = solPermutator.next();
-
-			// Map this combination of Permutations to a Solution
-			Solution solution = new Solution(houses); // Initialize solution (Nr. of houses is same for each solution)
-			for (int nr = 0; nr < houses; nr++) {
-				solution.houses[nr] = new House(nr + 1, keys.size());
-			}
-			for (int nr = 0; nr < houses; nr++) {
-				Integer[] propPermutation = propPermutations.get(solPermutation[nr]);
-				for (int k = 0; k < propPermutation.length; k++) {
-					String key = keys.get(nr);
-					solution.houses[k].properties[nr] = new Property(key, Property.getValues(key, properties).get(propPermutation[k]));
-				}
-			}
-			solutions.add(solution);
-		}
-		return solutions;
-	}
-
-	// TODO Add Comment
-	private List<Solution> getValidSolutions(List<Solution> possibleSolutions) {
-		List<Solution> solutions = new ArrayList<ZebraPuzzle.Solution>();
-
-		return solutions;
-	}
-
 	public static void main(String[] args) throws FileNotFoundException {
 		// TODO Validate args for paramenters (filepaths) input.csv and output.xml
 		File input = new File(args[0]);
 
 		// Parse Input
-		ZebraPuzzle puzzle = new ZebraPuzzle(input);
+		BruteForceSolver puzzle = new BruteForceSolver(input);
 
 		// Generate all Possible Solutions
-		List<Solution> possibleSolutions = puzzle.generateSolutions();
+		List<PuzzleSolution> possibleSolutions = puzzle.generateSolutions();
 
 		// validateSolutions
-		List<Solution> solutions = puzzle.getValidSolutions(possibleSolutions);
+		List<PuzzleSolution> solutions = puzzle.getValidSolutions(possibleSolutions);
 
-		for (Solution solution : solutions) {
+		for (PuzzleSolution solution : solutions) {
 			System.out.println(solution);
 		}
-	}
-
-	public class Solution {
-		House[] houses;
-
-		public Solution(int houseNr) {
-			this.houses = new House[houseNr];
-		}
-
-		@Override
-		public String toString() {
-			return Arrays.toString(houses);
-		}
-	}
-
-	public class House {
-		int position;
-
-		Property[] properties;
-
-		public House(int position, int propertyNr) {
-			this.position = position;
-			this.properties = new Property[propertyNr];
-		}
-
-		@Override
-		public String toString() {
-			return "House" + position + " " + Arrays.toString(properties);
-		}
-	}
-
-	public class Rule {
-		final RelativePosition position;
-
-		final List<Property> properties;
-
-		public Rule(RelativePosition position) {
-			this.position = position;
-			this.properties = new ArrayList<Property>();
-		}
-
-		public void addProperty(Property property) {
-			this.properties.add(property);
-		}
-	}
-
-	public enum RelativePosition {
-		SAME(), RIGHT(), LEFT(), NEXT();
 	}
 }
