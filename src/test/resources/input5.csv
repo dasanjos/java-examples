@@ -1,0 +1,17 @@
+5
+SAME,nationality,English,color,Red
+SAME,nationality,Spaniard,pet,Dog
+SAME,drink,Coffee,color,Green
+SAME,drink,Tea,nationality,Ukrainian
+LEFT,color,Ivory,color,Green
+SAME,smoke,Old gold,pet,Snails
+SAME,smoke,Kools,color,Yellow
+SAME,drink,Milk,position,3
+SAME,nationality,Norwegian,position,1
+NEXT,smoke,Chesterfields,pet,Fox
+NEXT,smoke,Kools,pet,Horse
+SAME,smoke,Lucky strike,drink,Orange juice
+SAME,smoke,Parliaments,nationality,Japanese
+NEXT,color,Blue,nationality,Norwegian
+SAME,drink,Water
+SAME,pet,Zebra
