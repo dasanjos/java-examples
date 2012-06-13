@@ -17,6 +17,10 @@ public class PuzzleSolution {
 		return houses[houseNr];
 	}
 
+	public int getHousesLenght() {
+		return houses.length;
+	}
+
 	@Override
 	public String toString() {
 		return Arrays.toString(houses);

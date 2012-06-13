@@ -8,8 +8,7 @@ import java.util.List;
 import org.junit.Test;
 
 import com.dasanjos.java.util.file.CSVReader;
-import com.dasanjos.java.zebraPuzzle.BruteForceSolver;
-import com.dasanjos.java.zebraPuzzle.model.HousePosition;
+import com.dasanjos.java.zebraPuzzle.model.PuzzleRule;
 import com.dasanjos.java.zebraPuzzle.model.PuzzleSolution;
 
 /**
@@ -52,7 +51,7 @@ public class BruteForceSolverTest {
 		assertEquals("nationality", puzzle.properties.get(0).getKey());
 		assertEquals("Norwegian", puzzle.properties.get(0).getValue());
 		assertEquals(1, puzzle.rules.size());
-		assertEquals(HousePosition.SAME, puzzle.rules.get(0).getPosition());
+		assertEquals(PuzzleRule.Position.SAME, puzzle.rules.get(0).getPosition());
 
 		List<PuzzleSolution> s = puzzle.generateSolutions();
 		assertEquals(1, s.size()); // 1! ^ 1

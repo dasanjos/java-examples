@@ -15,6 +15,11 @@ public class House {
 
 	public void putProperty(String key, String value) {
 		properties.put(key, value);
+
+	}
+
+	public String getProperty(String key) {
+		return properties.get(key);
 	}
 
 	@Override

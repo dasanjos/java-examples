@@ -9,7 +9,6 @@ import com.dasanjos.java.util.Property;
 import com.dasanjos.java.util.file.CSVReader;
 import com.dasanjos.java.util.math.PermutationIterator;
 import com.dasanjos.java.util.math.PermutationWithRepetitionIterator;
-import com.dasanjos.java.zebraPuzzle.model.HousePosition;
 import com.dasanjos.java.zebraPuzzle.model.PuzzleRule;
 import com.dasanjos.java.zebraPuzzle.model.PuzzleSolution;
 
@@ -87,7 +86,7 @@ public class BruteForceSolver {
 		// Read Rules and Calculate Unique Properties
 		while ((values = reader.readLine()) != null) {
 			int i = 0;
-			PuzzleRule rule = new PuzzleRule(HousePosition.valueOf(values.get(i++)));
+			PuzzleRule rule = new PuzzleRule(values.get(i++));
 			while (i < values.size()) {
 				Property property = new Property(values.get(i++), values.get(i++));
 				rule.addProperty(property);
