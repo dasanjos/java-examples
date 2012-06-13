@@ -38,29 +38,39 @@ public class BruteForceSolverTest {
 
 	private static final String INPUT2 = "2\nSAME,nationality,Norwegian,color,Red\n" + "SAME,nationality,Ukrainian,color,Blue\n";
 
-	private static final String INPUT3 = "3\nSAME,nationality,Norwegian,color,Yellow,drink,Water\n"
-			+ "SAME,nationality,Ukrainian,color,Blue,drink,Tea\n" + "SAME,nationality,English,color,Red,drink,Milk\n";
+	private static final String INPUT3 = "3\nSAME,nationality,Norwegian,color,Yellow\n" + "SAME,nationality,Ukrainian,color,Blue\n"
+			+ "SAME,nationality,English,color,Red\n" + "LEFT,drink,Water,drink,Tea\n" + "LEFT,drink,Tea,drink,Milk\n";
 
 	@Test
 	public void generateSolutionsOneHousesOneProperty() throws FileNotFoundException {
 		BruteForceSolver puzzle = new BruteForceSolver(new CSVReader(INPUT1, ","));
 
-		// TODO Move input test to a separated method
 		assertEquals(1, puzzle.houses);
 		assertEquals(1, puzzle.properties.size());
 		assertEquals("nationality", puzzle.properties.get(0).getKey());
 		assertEquals("Norwegian", puzzle.properties.get(0).getValue());
-		assertEquals(1, puzzle.rules.size());
-		assertEquals(PuzzleRule.Position.SAME, puzzle.rules.get(0).getPosition());
+		assertEquals(0, puzzle.rules.size());
 
 		List<PuzzleSolution> s = puzzle.generateSolutions();
 		assertEquals(1, s.size()); // 1! ^ 1
 		assertEquals("[House1 {nationality=Norwegian}]", s.get(0).toString());
+
+		List<PuzzleSolution> result = puzzle.getValidSolutions(s);
+		assertEquals(1, result.size());
 	}
 
 	@Test
 	public void generateSolutionsTwoHousesTwoProperties() {
 		BruteForceSolver puzzle = new BruteForceSolver(new CSVReader(INPUT2, ","));
+
+		// TODO Move input test to a separated method
+		assertEquals(2, puzzle.houses);
+		assertEquals(4, puzzle.properties.size());
+		assertEquals("nationality", puzzle.properties.get(0).getKey());
+		assertEquals("Norwegian", puzzle.properties.get(0).getValue());
+		assertEquals(2, puzzle.rules.size());
+		assertEquals(PuzzleRule.Position.SAME, puzzle.rules.get(0).getPosition());
+		assertEquals(PuzzleRule.Position.SAME, puzzle.rules.get(1).getPosition());
 
 		List<PuzzleSolution> s = puzzle.generateSolutions();
 		assertEquals(4, s.size()); // 2 * 2!
@@ -68,6 +78,9 @@ public class BruteForceSolverTest {
 		assertEquals("[House1 {color=Blue, nationality=Ukrainian}, House2 {color=Red, nationality=Norwegian}]", s.get(1).toString()); // 11-00
 		assertEquals("[House1 {color=Red, nationality=Norwegian}, House2 {color=Blue, nationality=Ukrainian}]", s.get(2).toString()); // 00-11
 		assertEquals("[House1 {color=Red, nationality=Ukrainian}, House2 {color=Blue, nationality=Norwegian}]", s.get(3).toString()); // 01-10
+
+		List<PuzzleSolution> result = puzzle.getValidSolutions(s);
+		assertEquals(2, result.size());
 	}
 
 	@Test
@@ -103,5 +116,8 @@ public class BruteForceSolverTest {
 		assertEquals(
 				"[House1 {color=Blue, drink=Milk, nationality=Norwegian}, House2 {color=Red, drink=Water, nationality=English}, House3 {color=Yellow, drink=Tea, nationality=Ukrainian}]",
 				s.get(8).toString());
+
+		List<PuzzleSolution> result = puzzle.getValidSolutions(s);
+		assertEquals(6, result.size());
 	}
 }

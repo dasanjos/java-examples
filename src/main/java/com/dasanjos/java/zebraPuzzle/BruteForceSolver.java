@@ -3,6 +3,7 @@ package com.dasanjos.java.zebraPuzzle;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 
 import com.dasanjos.java.util.Property;
@@ -77,24 +78,23 @@ public class BruteForceSolver {
 	 * @param input CSV File with Zebra Puzzle input content
 	 */
 	private void parseInputCSV(CSVReader reader) {
-		List<String> values;
-
 		// Read Number of Houses
-		values = reader.readLine();
+		List<String> values = reader.readLine();
 		this.houses = Integer.parseInt(values.get(0));
 
 		// Read Rules and Calculate Unique Properties
 		while ((values = reader.readLine()) != null) {
-			int i = 0;
-			PuzzleRule rule = new PuzzleRule(values.get(i++));
-			while (i < values.size()) {
-				Property property = new Property(values.get(i++), values.get(i++));
-				rule.addProperty(property);
-				if (!properties.contains(property)) {
-					properties.add(property);
-				}
+			Property property1 = new Property(values.get(1), values.get(2));
+			if (!properties.contains(property1)) {
+				properties.add(property1);
 			}
-			rules.add(rule);
+			if (values.size() == 5) {
+				Property property2 = new Property(values.get(3), values.get(4));
+				if (!properties.contains(property2)) {
+					properties.add(property2);
+				}
+				rules.add(new PuzzleRule(values.get(0), property1, property2));
+			}
 		}
 	}
 
@@ -140,10 +140,20 @@ public class BruteForceSolver {
 		return solutions;
 	}
 
-	// TODO Add Comment
+	// Validate all possible solutions with all rules and return valid solutions
 	public List<PuzzleSolution> getValidSolutions(List<PuzzleSolution> possibleSolutions) {
 		List<PuzzleSolution> solutions = new ArrayList<PuzzleSolution>();
-
+		for (PuzzleSolution solution : possibleSolutions) {
+			boolean valid = true;
+			Iterator<PuzzleRule> iterator = rules.iterator();
+			while (valid && iterator.hasNext()) {
+				PuzzleRule rule = iterator.next();
+				valid = rule.isValidSolution(solution);
+			}
+			if (valid) {
+				solutions.add(solution);
+			}
+		}
 		return solutions;
 	}
 }

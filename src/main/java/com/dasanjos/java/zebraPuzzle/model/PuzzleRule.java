@@ -1,23 +1,19 @@
 package com.dasanjos.java.zebraPuzzle.model;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.dasanjos.java.util.Property;
 
 public class PuzzleRule {
 
 	private final Position position;
 
-	private final List<Property> properties;
+	private final Property subject;
 
-	public PuzzleRule(String position) {
+	private final Property predicate;
+
+	public PuzzleRule(String position, Property subject, Property predicate) {
 		this.position = PuzzleRule.Position.valueOf(position);
-		this.properties = new ArrayList<Property>();
-	}
-
-	public void addProperty(Property property) {
-		this.properties.add(property);
+		this.subject = subject;
+		this.predicate = predicate;
 	}
 
 	public Position getPosition() {
@@ -25,56 +21,48 @@ public class PuzzleRule {
 	}
 
 	public boolean isValidSolution(PuzzleSolution solution) {
-		boolean valid = false;
-
 		switch (position) {
 			case SAME:
-				valid = verifySameHouse(solution);
-				break;
+				return verifySameHouse(solution);
 
 			case RIGHT:
-				valid = verifyRightHouse(solution);
-				break;
+				return verifyRightHouse(solution);
 
 			case LEFT:
-				valid = verifyLeftHouse(solution);
-				break;
+				return verifyLeftHouse(solution);
 
 			case NEXT:
-				valid = (verifyRightHouse(solution) || verifyLeftHouse(solution));
-				break;
+				return (verifyLeftHouse(solution) || verifyRightHouse(solution));
 
 			default:
-				valid = false;
-				break;
+				return false;
 		}
-		return valid;
 	}
 
-	private boolean verifySameHouse(PuzzleSolution solution) {
+	protected boolean verifySameHouse(PuzzleSolution solution) {
 		for (int h = 0; h < solution.getHousesLenght(); h++) {
-			if (solution.getHouse(h).getProperty(properties.get(0).getKey()).equals(properties.get(0).getValue())
-					&& solution.getHouse(h).getProperty(properties.get(1).getKey()).equals(properties.get(1).getValue())) {
+			if (subject.getValue().equals(solution.getHouse(h).getProperty(subject.getKey()))
+					&& predicate.getValue().equals(solution.getHouse(h).getProperty(predicate.getKey()))) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private boolean verifyRightHouse(PuzzleSolution solution) {
+	protected boolean verifyLeftHouse(PuzzleSolution solution) {
 		for (int h = 0; h < solution.getHousesLenght() - 1; h++) {
-			if (solution.getHouse(h).getProperty(properties.get(0).getKey()).equals(properties.get(0).getValue())
-					&& solution.getHouse(h + 1).getProperty(properties.get(1).getKey()).equals(properties.get(1).getValue())) {
+			if (subject.getValue().equals(solution.getHouse(h).getProperty(subject.getKey()))
+					&& predicate.getValue().equals(solution.getHouse(h + 1).getProperty(predicate.getKey()))) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private boolean verifyLeftHouse(PuzzleSolution solution) {
+	protected boolean verifyRightHouse(PuzzleSolution solution) {
 		for (int h = 1; h < solution.getHousesLenght(); h++) {
-			if (solution.getHouse(h).getProperty(properties.get(0).getKey()).equals(properties.get(0).getValue())
-					&& solution.getHouse(h - 1).getProperty(properties.get(1).getKey()).equals(properties.get(1).getValue())) {
+			if (subject.getValue().equals(solution.getHouse(h).getProperty(subject.getKey()))
+					&& predicate.getValue().equals(solution.getHouse(h - 1).getProperty(predicate.getKey()))) {
 				return true;
 			}
 		}
