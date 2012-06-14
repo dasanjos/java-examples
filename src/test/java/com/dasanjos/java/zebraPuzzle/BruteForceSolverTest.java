@@ -36,10 +36,12 @@ public class BruteForceSolverTest {
 
 	private static final String INPUT1 = "1\nSAME,nationality,Norwegian\n";
 
-	private static final String INPUT2 = "2\nSAME,nationality,Norwegian,color,Red\n" + "SAME,nationality,Ukrainian,color,Blue\n";
+	private static final String INPUT2 = "2\nSAME,nationality,Norwegian,color,Red\n" + "SAME,nationality,Ukrainian,color,Blue\n"
+			+ "LEFT,color,Red,color,Blue\n";
 
-	private static final String INPUT3 = "3\nSAME,nationality,Norwegian,color,Yellow\n" + "SAME,nationality,Ukrainian,color,Blue\n"
-			+ "SAME,nationality,English,color,Red\n" + "LEFT,drink,Water,drink,Tea\n" + "LEFT,drink,Tea,drink,Milk\n";
+	private static final String INPUT3 = "3\nSAME,drink,Water,color,Yellow\n" + "SAME,nationality,Ukrainian,color,Blue\n"
+			+ "SAME,nationality,English,color,Red\n" + "LEFT,drink,Water,drink,Tea\n" + "LEFT,color,Blue,drink,Milk\n"
+			+ "SAME,nationality,Norwegian,position,1\n";
 
 	@Test
 	public void generateSolutionsOneHousesOneProperty() throws FileNotFoundException {
@@ -53,7 +55,7 @@ public class BruteForceSolverTest {
 
 		List<PuzzleSolution> s = puzzle.generateSolutions();
 		assertEquals(1, s.size()); // 1! ^ 1
-		assertEquals("[House1 {nationality=Norwegian}]", s.get(0).toString());
+		assertEquals("[{nationality=Norwegian, position=1}]", s.get(0).toString());
 
 		List<PuzzleSolution> result = puzzle.getValidSolutions(s);
 		assertEquals(1, result.size());
@@ -68,19 +70,19 @@ public class BruteForceSolverTest {
 		assertEquals(4, puzzle.properties.size());
 		assertEquals("nationality", puzzle.properties.get(0).getKey());
 		assertEquals("Norwegian", puzzle.properties.get(0).getValue());
-		assertEquals(2, puzzle.rules.size());
+		assertEquals(3, puzzle.rules.size());
 		assertEquals(PuzzleRule.Position.SAME, puzzle.rules.get(0).getPosition());
 		assertEquals(PuzzleRule.Position.SAME, puzzle.rules.get(1).getPosition());
 
 		List<PuzzleSolution> s = puzzle.generateSolutions();
 		assertEquals(4, s.size()); // 2 * 2!
-		assertEquals("[House1 {color=Blue, nationality=Norwegian}, House2 {color=Red, nationality=Ukrainian}]", s.get(0).toString()); // 10-01
-		assertEquals("[House1 {color=Blue, nationality=Ukrainian}, House2 {color=Red, nationality=Norwegian}]", s.get(1).toString()); // 11-00
-		assertEquals("[House1 {color=Red, nationality=Norwegian}, House2 {color=Blue, nationality=Ukrainian}]", s.get(2).toString()); // 00-11
-		assertEquals("[House1 {color=Red, nationality=Ukrainian}, House2 {color=Blue, nationality=Norwegian}]", s.get(3).toString()); // 01-10
+		assertEquals("[{color=Blue, nationality=Norwegian, position=1}, {color=Red, nationality=Ukrainian, position=2}]", s.get(0).toString()); // 10-01
+		assertEquals("[{color=Blue, nationality=Ukrainian, position=1}, {color=Red, nationality=Norwegian, position=2}]", s.get(1).toString()); // 11-00
+		assertEquals("[{color=Red, nationality=Norwegian, position=1}, {color=Blue, nationality=Ukrainian, position=2}]", s.get(2).toString()); // 00-11
+		assertEquals("[{color=Red, nationality=Ukrainian, position=1}, {color=Blue, nationality=Norwegian, position=2}]", s.get(3).toString()); // 01-10
 
 		List<PuzzleSolution> result = puzzle.getValidSolutions(s);
-		assertEquals(2, result.size());
+		assertEquals(1, result.size());
 	}
 
 	@Test
@@ -90,34 +92,19 @@ public class BruteForceSolverTest {
 		List<PuzzleSolution> s = puzzle.generateSolutions();
 		assertEquals(216, s.size()); // 3! ^ 3
 		assertEquals(
-				"[House1 {color=Blue, drink=Milk, nationality=English}, House2 {color=Red, drink=Tea, nationality=Norwegian}, House3 {color=Yellow, drink=Water, nationality=Ukrainian}]",
+				"[{color=Blue, drink=Milk, nationality=English, position=1}, {color=Red, drink=Tea, nationality=Norwegian, position=2}, {color=Yellow, drink=Water, nationality=Ukrainian, position=3}]",
 				s.get(0).toString());
 		assertEquals(
-				"[House1 {color=Blue, drink=Milk, nationality=English}, House2 {color=Red, drink=Tea, nationality=Ukrainian}, House3 {color=Yellow, drink=Water, nationality=Norwegian}]",
+				"[{color=Blue, drink=Milk, nationality=English, position=1}, {color=Red, drink=Tea, nationality=Ukrainian, position=2}, {color=Yellow, drink=Water, nationality=Norwegian, position=3}]",
 				s.get(1).toString());
 		assertEquals(
-				"[House1 {color=Blue, drink=Milk, nationality=Norwegian}, House2 {color=Red, drink=Tea, nationality=English}, House3 {color=Yellow, drink=Water, nationality=Ukrainian}]",
+				"[{color=Blue, drink=Milk, nationality=Norwegian, position=1}, {color=Red, drink=Tea, nationality=English, position=2}, {color=Yellow, drink=Water, nationality=Ukrainian, position=3}]",
 				s.get(2).toString());
 		assertEquals(
-				"[House1 {color=Blue, drink=Milk, nationality=Norwegian}, House2 {color=Red, drink=Tea, nationality=Ukrainian}, House3 {color=Yellow, drink=Water, nationality=English}]",
+				"[{color=Blue, drink=Milk, nationality=Norwegian, position=1}, {color=Red, drink=Tea, nationality=Ukrainian, position=2}, {color=Yellow, drink=Water, nationality=English, position=3}]",
 				s.get(3).toString());
-		assertEquals(
-				"[House1 {color=Blue, drink=Milk, nationality=Ukrainian}, House2 {color=Red, drink=Tea, nationality=Norwegian}, House3 {color=Yellow, drink=Water, nationality=English}]",
-				s.get(4).toString());
-		assertEquals(
-				"[House1 {color=Blue, drink=Milk, nationality=Ukrainian}, House2 {color=Red, drink=Tea, nationality=English}, House3 {color=Yellow, drink=Water, nationality=Norwegian}]",
-				s.get(5).toString());
-		assertEquals(
-				"[House1 {color=Blue, drink=Milk, nationality=English}, House2 {color=Red, drink=Water, nationality=Norwegian}, House3 {color=Yellow, drink=Tea, nationality=Ukrainian}]",
-				s.get(6).toString());
-		assertEquals(
-				"[House1 {color=Blue, drink=Milk, nationality=English}, House2 {color=Red, drink=Water, nationality=Ukrainian}, House3 {color=Yellow, drink=Tea, nationality=Norwegian}]",
-				s.get(7).toString());
-		assertEquals(
-				"[House1 {color=Blue, drink=Milk, nationality=Norwegian}, House2 {color=Red, drink=Water, nationality=English}, House3 {color=Yellow, drink=Tea, nationality=Ukrainian}]",
-				s.get(8).toString());
 
 		List<PuzzleSolution> result = puzzle.getValidSolutions(s);
-		assertEquals(6, result.size());
+		assertEquals(1, result.size());
 	}
 }

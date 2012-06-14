@@ -4,13 +4,12 @@ import java.util.Map;
 import java.util.TreeMap;
 
 public class House {
-	private final int position;
 
 	private final Map<String, String> properties;
 
 	public House(int position) {
-		this.position = position;
 		this.properties = new TreeMap<String, String>();
+		this.properties.put("position", String.valueOf(position));
 	}
 
 	public void putProperty(String key, String value) {
@@ -24,6 +23,6 @@ public class House {
 
 	@Override
 	public String toString() {
-		return "House" + position + " " + properties.toString();
+		return properties.toString();
 	}
 }

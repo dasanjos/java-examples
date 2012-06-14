@@ -56,11 +56,11 @@ import com.dasanjos.java.zebraPuzzle.model.PuzzleSolution;
  */
 public class BruteForceSolver {
 
-	int houses;
+	protected int houses;
 
-	List<Property> properties;
+	protected List<Property> properties;
 
-	List<PuzzleRule> rules;
+	protected List<PuzzleRule> rules;
 
 	public BruteForceSolver(File input) throws FileNotFoundException {
 		this(new CSVReader(input, ","));
@@ -85,12 +85,12 @@ public class BruteForceSolver {
 		// Read Rules and Calculate Unique Properties
 		while ((values = reader.readLine()) != null) {
 			Property property1 = new Property(values.get(1), values.get(2));
-			if (!properties.contains(property1)) {
+			if (!"position".equals(property1.getKey()) && !properties.contains(property1)) {
 				properties.add(property1);
 			}
 			if (values.size() == 5) {
 				Property property2 = new Property(values.get(3), values.get(4));
-				if (!properties.contains(property2)) {
+				if (!"position".equals(property1.getKey()) && !properties.contains(property2)) {
 					properties.add(property2);
 				}
 				rules.add(new PuzzleRule(values.get(0), property1, property2));
