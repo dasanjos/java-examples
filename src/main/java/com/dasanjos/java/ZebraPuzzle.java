@@ -57,11 +57,8 @@ public class ZebraPuzzle {
 		// Parse Input
 		BruteForceSolver puzzle = new BruteForceSolver(input);
 
-		// Generate all Possible Solutions
-		List<PuzzleSolution> possibleSolutions = puzzle.generateSolutions();
-
-		// validateSolutions
-		List<PuzzleSolution> solutions = puzzle.getValidSolutions(possibleSolutions);
+		// Generate all valid Solutions
+		List<PuzzleSolution> solutions = puzzle.generateValidSolutions();
 
 		for (PuzzleSolution solution : solutions) {
 			System.out.println(solution);

@@ -21,9 +21,9 @@ public class PermutationWithRepetitionIterator<T> implements Iterator<T[]> {
 
 	private int size;
 
-	private int total;
+	private long total;
 
-	private int current;
+	private long current;
 
 	/**
 	 * Constructor to create an permutation iterator of all elements in array parameter
@@ -43,7 +43,7 @@ public class PermutationWithRepetitionIterator<T> implements Iterator<T[]> {
 	public PermutationWithRepetitionIterator(T[] array, int size) {
 		this.array = array.clone();
 		this.size = size;
-		this.total = (int) Math.pow(array.length, size);
+		this.total = (long) Math.pow(array.length, size);
 		this.current = 0;
 	}
 
@@ -64,6 +64,7 @@ public class PermutationWithRepetitionIterator<T> implements Iterator<T[]> {
 
 	@Override
 	public boolean hasNext() {
+		// System.out.println((double) (100 * ((double) current / (double) total)) + "%");
 		return (current < total);
 	}
 
@@ -79,14 +80,14 @@ public class PermutationWithRepetitionIterator<T> implements Iterator<T[]> {
 	 * @param base the desired new number base
 	 * @return array of integers representing decimal number on new base
 	 */
-	private int[] convertBase(int decimalNumber, int base) {
+	private int[] convertBase(long decimalNumber, int base) {
 		int[] result = new int[size];
 		int i = size;
 		while (decimalNumber >= base) {
-			result[--i] = (decimalNumber % base);
+			result[--i] = (int) (decimalNumber % base);
 			decimalNumber = decimalNumber / base;
 		}
-		result[--i] = decimalNumber;
+		result[--i] = (int) decimalNumber;
 		return result;
 	}
 }

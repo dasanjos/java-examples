@@ -99,9 +99,9 @@ public class BruteForceSolver {
 	}
 
 	/**
-	 * Generate all possible solutions based on the number of houses (rows) and number of unique properties (columns)
+	 * Generate and validate all possible solutions based on the number of houses (rows) and number of unique properties (columns)
 	 */
-	public List<PuzzleSolution> generateSolutions() {
+	public List<PuzzleSolution> generateValidSolutions() {
 		List<PuzzleSolution> solutions = new ArrayList<PuzzleSolution>();
 		List<String> keys = Property.getUniqueKeys(properties);
 
@@ -135,25 +135,21 @@ public class BruteForceSolver {
 					solution.getHouse(k).putProperty(key, Property.getValues(key, properties).get(propPermutation[k]));
 				}
 			}
-			solutions.add(solution);
+			if (validateSolution(solution)) {
+				solutions.add(solution);
+			}
 		}
 		return solutions;
 	}
 
 	// Validate all possible solutions with all rules and return valid solutions
-	public List<PuzzleSolution> getValidSolutions(List<PuzzleSolution> possibleSolutions) {
-		List<PuzzleSolution> solutions = new ArrayList<PuzzleSolution>();
-		for (PuzzleSolution solution : possibleSolutions) {
-			boolean valid = true;
-			Iterator<PuzzleRule> iterator = rules.iterator();
-			while (valid && iterator.hasNext()) {
-				PuzzleRule rule = iterator.next();
-				valid = rule.isValidSolution(solution);
-			}
-			if (valid) {
-				solutions.add(solution);
-			}
+	public boolean validateSolution(PuzzleSolution solution) {
+		boolean valid = true;
+		Iterator<PuzzleRule> iterator = rules.iterator();
+		while (valid && iterator.hasNext()) {
+			PuzzleRule rule = iterator.next();
+			valid = rule.isValidSolution(solution);
 		}
-		return solutions;
+		return valid;
 	}
 }
