@@ -15,7 +15,8 @@ import com.dasanjos.java.zebraPuzzle.model.PuzzleSolution;
 
 /**
  * <p>
- * Java Brute Force implementation of <a href="http://en.wikipedia.org/wiki/Zebra_Puzzle"> Zebra Puzzle</a> (also called Einstein's Puzzle)
+ * Java Brute Force implementation of <a href="http://en.wikipedia.org/wiki/Zebra_Puzzle"> Zebra Puzzle</a> (also called Einstein's Puzzle) <br />
+ * Generate solutions within seconds for puzzles with 1, 2, 3 or 4 houses, but takes hours to generate solutions for 5 houses.
  * </p>
  * 
  * <b>Example input file (input.csv)</b> <br />
@@ -142,7 +143,12 @@ public class BruteForceSolver {
 		return solutions;
 	}
 
-	// Validate all possible solutions with all rules and return valid solutions
+	/**
+	 * Validate solution with all rules
+	 * 
+	 * @param solution the Solution being validated
+	 * @return true if valid solution based on rules, false otherwise
+	 */
 	public boolean validateSolution(PuzzleSolution solution) {
 		boolean valid = true;
 		Iterator<PuzzleRule> iterator = rules.iterator();

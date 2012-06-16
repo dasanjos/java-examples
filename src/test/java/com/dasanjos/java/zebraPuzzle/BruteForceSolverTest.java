@@ -2,6 +2,7 @@ package com.dasanjos.java.zebraPuzzle;
 
 import static junit.framework.Assert.assertEquals;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 
@@ -21,8 +22,8 @@ import com.dasanjos.java.zebraPuzzle.model.PuzzleSolution;
  * Number of Solutions = SolNr = PermNr! ^ HouseNr!
  * 
  * For houseNr = 2 -> PermNr =   2 and SolNr =                       4
- * For houseNr = 3 -> PermNr =   6 and SolNr =                     216 (hundreds - solved in seconds) 
- * For houseNr = 4 -> PermNr =  24 and SolNr =                 331,776 (thousands - solved in minutes)		
+ * For houseNr = 3 -> PermNr =   6 and SolNr =                     216 (hundreds - solved in milliseconds) 
+ * For houseNr = 4 -> PermNr =  24 and SolNr =                 331,776 (thousands - solved in seconds)		
  * For houseNr = 5 -> PermNr = 120 and SolNr =          24,883,200,000 (billions - solved in days) 
  * For houseNr = 6 -> PermNr = 720 and SolNr = 139,314,069,504,000,000 (quadrillions - too large to be solved)
  * 
@@ -34,18 +35,10 @@ import com.dasanjos.java.zebraPuzzle.model.PuzzleSolution;
  */
 public class BruteForceSolverTest {
 
-	private static final String INPUT1 = "1\nSAME,nationality,Norwegian\n";
-
-	private static final String INPUT2 = "2\nSAME,nationality,Norwegian,color,Red\n" + "SAME,nationality,Ukrainian,color,Blue\n"
-			+ "LEFT,color,Red,color,Blue\n";
-
-	private static final String INPUT3 = "3\nSAME,drink,Water,color,Yellow\n" + "SAME,nationality,Ukrainian,color,Blue\n"
-			+ "SAME,nationality,English,color,Red\n" + "LEFT,drink,Water,drink,Tea\n" + "LEFT,color,Blue,drink,Milk\n"
-			+ "SAME,nationality,Norwegian,position,1\n";
-
 	@Test
-	public void generateSolutionsOneHousesOneProperty() throws FileNotFoundException {
-		BruteForceSolver puzzle = new BruteForceSolver(new CSVReader(INPUT1, ","));
+	public void generateSolutionsOneHousesOneProperty() {
+		String input = "1\nSAME,nationality,Norwegian\n";
+		BruteForceSolver puzzle = new BruteForceSolver(new CSVReader(input, ","));
 
 		assertEquals(1, puzzle.houses);
 		assertEquals(1, puzzle.properties.size());
@@ -59,10 +52,9 @@ public class BruteForceSolverTest {
 	}
 
 	@Test
-	public void generateSolutionsTwoHousesTwoProperties() {
-		BruteForceSolver puzzle = new BruteForceSolver(new CSVReader(INPUT2, ","));
+	public void generateSolutionsTwoHousesTwoProperties() throws FileNotFoundException {
+		BruteForceSolver puzzle = new BruteForceSolver(new CSVReader(new File("src/test/resources/input2.csv"), ","));
 
-		// TODO Move input test to a separated method
 		assertEquals(2, puzzle.houses);
 		assertEquals(4, puzzle.properties.size());
 		assertEquals("nationality", puzzle.properties.get(0).getKey());
@@ -77,13 +69,13 @@ public class BruteForceSolverTest {
 	}
 
 	@Test
-	public void generateSolutionsThreeHousesThreeProperties() {
-		BruteForceSolver puzzle = new BruteForceSolver(new CSVReader(INPUT3, ","));
+	public void generateSolutionsThreeHousesThreeProperties() throws FileNotFoundException {
+		BruteForceSolver puzzle = new BruteForceSolver(new CSVReader(new File("src/test/resources/input3.csv"), ","));
 
+		String result = "[{color=Yellow, drink=Water, nationality=Norwegian, position=1},"
+				+ " {color=Blue, drink=Tea, nationality=Ukrainian, position=2}, " + "{color=Red, drink=Milk, nationality=English, position=3}]";
 		List<PuzzleSolution> s = puzzle.generateValidSolutions();
 		assertEquals(1, s.size()); // 3! ^ 3
-		assertEquals(
-				"[{color=Yellow, drink=Water, nationality=Norwegian, position=1}, {color=Blue, drink=Tea, nationality=Ukrainian, position=2}, {color=Red, drink=Milk, nationality=English, position=3}]",
-				s.get(0).toString());
+		assertEquals(result, s.get(0).toString());
 	}
 }
