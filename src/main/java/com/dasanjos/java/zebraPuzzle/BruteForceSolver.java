@@ -90,7 +90,7 @@ public class BruteForceSolver {
 			}
 			if (values.size() == 5) {
 				Property property2 = new Property(values.get(3), values.get(4));
-				if (!"position".equals(property1.getKey()) && !properties.contains(property2)) {
+				if (!"position".equals(property2.getKey()) && !properties.contains(property2)) {
 					properties.add(property2);
 				}
 				rules.add(new PuzzleRule(values.get(0), property1, property2));
