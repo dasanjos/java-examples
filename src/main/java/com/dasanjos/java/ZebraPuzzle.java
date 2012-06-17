@@ -64,26 +64,25 @@ import com.dasanjos.java.zebraPuzzle.model.PuzzleSolution;
 public class ZebraPuzzle {
 
 	public static void main(String[] args) throws Exception {
-		// TODO Validate args for paramenters (filepaths) input.csv and output.xml
-		validateParams(args);
-
-		// Parse Input
-		BruteForceSolver puzzle = new BruteForceSolver(args[0]);
-
-		// Generate all valid Solutions
-		List<PuzzleSolution> solutions = puzzle.generateValidSolutions();
-
-		writeXMLOutput(solutions, args[1]);
-	}
-
-	private static void validateParams(String[] args) {
+		// Validate args for paramenters (filepaths) input.csv and output.xml
 		if (args.length < 2) {
 			System.out.println("Required arguments missing: Path to input CSV file and output XML file.");
 			System.out.println("Usage: java -jar ZebraPuzzle.jar path-to-input.csv path-to-output.xml");
 			System.exit(-1);
 		}
+
+		BruteForceSolver puzzle = new BruteForceSolver(args[0]);
+		List<PuzzleSolution> solutions = puzzle.generateValidSolutions();
+		writeXMLOutput(solutions, args[1]);
 	}
 
+	/**
+	 * Create XML output file (with link to zebra.xls) for puzzle solutions
+	 * 
+	 * @param solutions List of Puzzle solutions
+	 * @param path path to output XML file
+	 * @throws Exception
+	 */
 	private static void writeXMLOutput(List<PuzzleSolution> solutions, String path) throws Exception {
 		Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
 		doc.setXmlStandalone(true);

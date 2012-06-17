@@ -4,6 +4,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+// TODO Remove and move methods to House
 public class Property {
 	private final String key;
 

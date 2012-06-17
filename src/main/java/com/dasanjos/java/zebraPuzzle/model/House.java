@@ -6,6 +6,7 @@ import java.util.TreeMap;
 
 public class House {
 
+	// TODO Replace by java.util.properties
 	private final Map<String, String> properties;
 
 	public House(int position) {
