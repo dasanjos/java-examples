@@ -25,7 +25,7 @@ import org.w3c.dom.ProcessingInstruction;
 
 import com.dasanjos.java.util.Property;
 import com.dasanjos.java.util.file.CSVReader;
-import com.dasanjos.java.zebraPuzzle.BruteForceAlgorithm;
+import com.dasanjos.java.zebraPuzzle.OptimizedFiveHousesAlgorithm;
 import com.dasanjos.java.zebraPuzzle.model.House;
 import com.dasanjos.java.zebraPuzzle.model.PuzzleRule;
 import com.dasanjos.java.zebraPuzzle.model.PuzzleSolution;
@@ -195,7 +195,11 @@ public abstract class ZebraPuzzle {
 			System.exit(-1);
 		}
 
-		BruteForceAlgorithm puzzle = new BruteForceAlgorithm();
+		// Generic implementation for puzzle with 1 to 4 houses
+		// ZebraPuzzle puzzle = new GenericBruteForceAlgorithm();
+		
+		// Optimized implementation for puzzle with 5 houses
+		ZebraPuzzle puzzle = new OptimizedFiveHousesAlgorithm();
 		puzzle.parseInputCSV(args[0]);
 		puzzle.generateValidSolutions();
 		puzzle.writeXMLOutput(args[1]);

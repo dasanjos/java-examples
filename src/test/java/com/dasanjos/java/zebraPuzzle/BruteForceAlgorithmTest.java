@@ -34,7 +34,7 @@ public class BruteForceAlgorithmTest {
 
 	@Test
 	public void generateSolutionsOneHouse() throws FileNotFoundException {
-		BruteForceAlgorithm puzzle = new BruteForceAlgorithm();
+		GenericBruteForceAlgorithm puzzle = new GenericBruteForceAlgorithm();
 		puzzle.parseInputCSV("src/test/resources/input1.csv");
 		List<PuzzleSolution> solutions = puzzle.generateValidSolutions();
 		assertEquals(1, solutions.size());
@@ -43,7 +43,7 @@ public class BruteForceAlgorithmTest {
 
 	@Test
 	public void generateSolutionsTwoHouses() throws FileNotFoundException {
-		BruteForceAlgorithm puzzle = new BruteForceAlgorithm();
+		GenericBruteForceAlgorithm puzzle = new GenericBruteForceAlgorithm();
 		puzzle.parseInputCSV("src/test/resources/input2.csv");
 		List<PuzzleSolution> solutions = puzzle.generateValidSolutions();
 		assertEquals(1, solutions.size());
@@ -52,7 +52,7 @@ public class BruteForceAlgorithmTest {
 
 	@Test
 	public void generateSolutionsThreeHouses() throws FileNotFoundException {
-		BruteForceAlgorithm puzzle = new BruteForceAlgorithm();
+		GenericBruteForceAlgorithm puzzle = new GenericBruteForceAlgorithm();
 		puzzle.parseInputCSV("src/test/resources/input3.csv");
 		List<PuzzleSolution> solutions = puzzle.generateValidSolutions();
 		assertEquals(1, solutions.size());
@@ -62,7 +62,7 @@ public class BruteForceAlgorithmTest {
 
 	@Test
 	public void generateSolutionsFourHouses() throws FileNotFoundException {
-		BruteForceAlgorithm puzzle = new BruteForceAlgorithm();
+		GenericBruteForceAlgorithm puzzle = new GenericBruteForceAlgorithm();
 		puzzle.parseInputCSV("src/test/resources/input4.csv");
 		List<PuzzleSolution> solutions = puzzle.generateValidSolutions();
 		assertEquals(1, solutions.size());

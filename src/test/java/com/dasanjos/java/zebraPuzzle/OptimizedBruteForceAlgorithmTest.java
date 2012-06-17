@@ -13,7 +13,7 @@ public class OptimizedBruteForceAlgorithmTest {
 
 	@Test
 	public void generateSolutionsFiveHouses() throws FileNotFoundException {
-		OptimizedBruteForceAlgorithm puzzle = new OptimizedBruteForceAlgorithm();
+		OptimizedFiveHousesAlgorithm puzzle = new OptimizedFiveHousesAlgorithm();
 		puzzle.parseInputCSV("src/test/resources/input5.csv");
 
 		List<PuzzleSolution> solutions = puzzle.generateValidSolutions();

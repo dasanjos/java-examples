@@ -27,51 +27,51 @@ public class PuzzleRuleValidationTest {
 	@Test
 	public void testSameHouseValidSolution() {
 		PuzzleRule rule = new PuzzleRule("SAME", new Property("color", "blue"), new Property("drink", "tea"));
-		Assert.assertTrue(rule.isPossibleSolution(solution));
+		Assert.assertTrue(rule.isValidSolution(solution));
 	}
 
 	@Test
 	public void testSameHouseNotValidSolution() {
 		PuzzleRule rule = new PuzzleRule("SAME", new Property("color", "blue"), new Property("drink", "water"));
-		Assert.assertFalse(rule.isPossibleSolution(solution));
+		Assert.assertFalse(rule.isValidSolution(solution));
 	}
 
 	@Test
 	public void testLeftHouseValidSolution() {
 		PuzzleRule rule = new PuzzleRule("LEFT", new Property("color", "red"), new Property("color", "blue"));
-		Assert.assertTrue(rule.isPossibleSolution(solution));
+		Assert.assertTrue(rule.isValidSolution(solution));
 	}
 
 	@Test
 	public void testLeftHouseNotValidSolution() {
 		PuzzleRule rule = new PuzzleRule("LEFT", new Property("color", "red"), new Property("color", "yellow"));
-		Assert.assertFalse(rule.isPossibleSolution(solution));
+		Assert.assertFalse(rule.isValidSolution(solution));
 	}
 
 	@Test
 	public void testRightHouseValidSolution() {
 		PuzzleRule rule = new PuzzleRule("RIGHT", new Property("color", "blue"), new Property("color", "red"));
-		Assert.assertTrue(rule.isPossibleSolution(solution));
+		Assert.assertTrue(rule.isValidSolution(solution));
 	}
 
 	@Test
 	public void testRightHouseNotValidSolution() {
 		PuzzleRule rule = new PuzzleRule("RIGHT", new Property("color", "red"), new Property("color", "yellow"));
-		Assert.assertFalse(rule.isPossibleSolution(solution));
+		Assert.assertFalse(rule.isValidSolution(solution));
 	}
 
 	@Test
 	public void testNextHouseValidSolution() {
 		PuzzleRule rule = new PuzzleRule("NEXT", new Property("color", "blue"), new Property("color", "red"));
-		Assert.assertTrue(rule.isPossibleSolution(solution));
+		Assert.assertTrue(rule.isValidSolution(solution));
 
 		rule = new PuzzleRule("NEXT", new Property("color", "red"), new Property("color", "blue"));
-		Assert.assertTrue(rule.isPossibleSolution(solution));
+		Assert.assertTrue(rule.isValidSolution(solution));
 	}
 
 	@Test
 	public void testNextHouseNotValidSolution() {
 		PuzzleRule rule = new PuzzleRule("NEXT", new Property("color", "red"), new Property("color", "yellow"));
-		Assert.assertFalse(rule.isPossibleSolution(solution));
+		Assert.assertFalse(rule.isValidSolution(solution));
 	}
 }
