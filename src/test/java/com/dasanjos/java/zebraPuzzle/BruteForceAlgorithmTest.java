@@ -3,11 +3,11 @@ package com.dasanjos.java.zebraPuzzle;
 import static junit.framework.Assert.assertEquals;
 
 import java.io.FileNotFoundException;
+import java.util.List;
 
 import org.junit.Test;
 
-import com.dasanjos.java.util.file.CSVReader;
-import com.dasanjos.java.zebraPuzzle.model.PuzzleRule;
+import com.dasanjos.java.zebraPuzzle.model.PuzzleSolution;
 
 /**
  * Unit tests for Zebra Puzzle. <br/>
@@ -33,44 +33,42 @@ import com.dasanjos.java.zebraPuzzle.model.PuzzleRule;
 public class BruteForceAlgorithmTest {
 
 	@Test
-	public void generateSolutionsOneHousesOneProperty() throws FileNotFoundException {
-		BruteForceAlgorithm puzzle = new BruteForceAlgorithm(new CSVReader("src/test/resources/input1.csv"));
-
-		assertEquals(1, puzzle.houses);
-		assertEquals(1, puzzle.properties.size());
-		assertEquals("nationality", puzzle.properties.get(0).getKey());
-		assertEquals("Norwegian", puzzle.properties.get(0).getValue());
-		assertEquals(0, puzzle.rules.size());
-
-		puzzle.generateValidSolutions();
-		assertEquals(1, puzzle.solutions.size()); // 1! ^ 1
-		assertEquals("[{nationality=Norwegian, position=1}]", puzzle.solutions.get(0).toString());
+	public void generateSolutionsOneHouse() throws FileNotFoundException {
+		BruteForceAlgorithm puzzle = new BruteForceAlgorithm();
+		puzzle.parseInputCSV("src/test/resources/input1.csv");
+		List<PuzzleSolution> solutions = puzzle.generateValidSolutions();
+		assertEquals(1, solutions.size());
+		assertEquals("[{nationality=Norwegian, position=1}]", solutions.get(0).toString());
 	}
 
 	@Test
-	public void generateSolutionsTwoHousesTwoProperties() throws FileNotFoundException {
-		BruteForceAlgorithm puzzle = new BruteForceAlgorithm(new CSVReader("src/test/resources/input2.csv"));
-
-		assertEquals(2, puzzle.houses);
-		assertEquals(4, puzzle.properties.size());
-		assertEquals("nationality", puzzle.properties.get(0).getKey());
-		assertEquals("Norwegian", puzzle.properties.get(0).getValue());
-		assertEquals(3, puzzle.rules.size());
-		assertEquals(PuzzleRule.Position.SAME, puzzle.rules.get(0).getPosition());
-		assertEquals(PuzzleRule.Position.SAME, puzzle.rules.get(1).getPosition());
-
-		puzzle.generateValidSolutions();
-		assertEquals(1, puzzle.solutions.size()); // 2! ^ 2
-		assertEquals("[{color=Red, nationality=Norwegian, position=1}, {color=Blue, nationality=Ukrainian, position=2}]", puzzle.solutions.get(0).toString());
+	public void generateSolutionsTwoHouses() throws FileNotFoundException {
+		BruteForceAlgorithm puzzle = new BruteForceAlgorithm();
+		puzzle.parseInputCSV("src/test/resources/input2.csv");
+		List<PuzzleSolution> solutions = puzzle.generateValidSolutions();
+		assertEquals(1, solutions.size());
+		assertEquals("[{color=Red, nationality=Norwegian, position=1}, {color=Blue, nationality=Ukrainian, position=2}]", solutions.get(0).toString());
 	}
 
 	@Test
-	public void generateSolutionsThreeHousesThreeProperties() throws FileNotFoundException {
-		BruteForceAlgorithm puzzle = new BruteForceAlgorithm(new CSVReader("src/test/resources/input3.csv"));
-
-		puzzle.generateValidSolutions();
-		assertEquals(1, puzzle.solutions.size()); // 3! ^ 3
+	public void generateSolutionsThreeHouses() throws FileNotFoundException {
+		BruteForceAlgorithm puzzle = new BruteForceAlgorithm();
+		puzzle.parseInputCSV("src/test/resources/input3.csv");
+		List<PuzzleSolution> solutions = puzzle.generateValidSolutions();
+		assertEquals(1, solutions.size());
 		assertEquals("[{color=Yellow, drink=Water, nationality=Norwegian, position=1}, {color=Blue, drink=Tea, nationality=Ukrainian, position=2}, "
-				+ "{color=Red, drink=Milk, nationality=English, position=3}]", puzzle.solutions.get(0).toString());
+				+ "{color=Red, drink=Milk, nationality=English, position=3}]", solutions.get(0).toString());
+	}
+
+	@Test
+	public void generateSolutionsFourHouses() throws FileNotFoundException {
+		BruteForceAlgorithm puzzle = new BruteForceAlgorithm();
+		puzzle.parseInputCSV("src/test/resources/input4.csv");
+		List<PuzzleSolution> solutions = puzzle.generateValidSolutions();
+		assertEquals(1, solutions.size());
+		assertEquals("[{color=Yellow, drink=Water, nationality=Norwegian, position=1, smoke=Kools},"
+				+ " {color=Blue, drink=Tea, nationality=Ukrainian, position=2, smoke=Chesterfields},"
+				+ " {color=Red, drink=Milk, nationality=English, position=3, smoke=Old gold},"
+				+ " {color=Ivory, drink=Orange juice, nationality=Spaniard, position=4, smoke=Lucky strike}]", solutions.get(0).toString());
 	}
 }

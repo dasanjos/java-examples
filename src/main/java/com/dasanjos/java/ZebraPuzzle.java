@@ -1,6 +1,34 @@
 package com.dasanjos.java;
 
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.io.Writer;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilderFactory;
+import javax.xml.transform.OutputKeys;
+import javax.xml.transform.Transformer;
+import javax.xml.transform.TransformerFactory;
+import javax.xml.transform.dom.DOMSource;
+import javax.xml.transform.stream.StreamResult;
+
+import org.w3c.dom.Attr;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.ProcessingInstruction;
+
+import com.dasanjos.java.util.Property;
+import com.dasanjos.java.util.file.CSVReader;
 import com.dasanjos.java.zebraPuzzle.BruteForceAlgorithm;
+import com.dasanjos.java.zebraPuzzle.model.House;
+import com.dasanjos.java.zebraPuzzle.model.PuzzleRule;
+import com.dasanjos.java.zebraPuzzle.model.PuzzleSolution;
 
 /**
  * <p>
@@ -43,7 +71,121 @@ import com.dasanjos.java.zebraPuzzle.BruteForceAlgorithm;
  * &lt;/solutions>
  * </pre>
  */
-public class ZebraPuzzle {
+public abstract class ZebraPuzzle {
+
+	protected int houses;
+
+	protected List<Property> properties = new ArrayList<Property>();;
+
+	protected List<PuzzleRule> rules = new ArrayList<PuzzleRule>();;
+
+	protected List<PuzzleSolution> solutions = new ArrayList<PuzzleSolution>();
+
+	protected String[] keys;
+
+	/**
+	 * Parse input file and generate internal lists of properties, keys and rules for solution generation and validation
+	 * 
+	 * @param path
+	 * @throws FileNotFoundException
+	 */
+	public void parseInputCSV(String path) throws FileNotFoundException {
+		CSVReader reader = new CSVReader(path);
+		// Read Number of Houses
+		List<String> values = reader.readLine();
+		this.houses = Integer.parseInt(values.get(0));
+
+		// Read Rules and Calculate Unique Properties
+		while ((values = reader.readLine()) != null) {
+			Property property1 = new Property(values.get(1), values.get(2));
+			if (!"position".equals(property1.getKey()) && !properties.contains(property1)) {
+				properties.add(property1);
+			}
+			if (values.size() == 5) {
+				Property property2 = new Property(values.get(3), values.get(4));
+				if (!"position".equals(property2.getKey()) && !properties.contains(property2)) {
+					properties.add(property2);
+				}
+				rules.add(new PuzzleRule(values.get(0), property1, property2));
+			}
+		}
+		// Set list of columns (unique keys of properties)
+		keys = Property.getUniqueKeys(properties).toArray(new String[this.houses]);
+	}
+
+	public abstract List<PuzzleSolution> generateValidSolutions();
+
+	/**
+	 * Create XML output file (with link to template.xsl) for puzzle solutions
+	 * 
+	 * @param path path to output XML file
+	 * @throws Exception
+	 */
+	public void writeXMLOutput(String path) throws Exception {
+		Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
+		doc.setXmlStandalone(true);
+
+		ProcessingInstruction pi = doc.createProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"template.xsl\"");
+		doc.appendChild(pi);
+
+		Element rootElement = doc.createElement("solutions");
+		doc.appendChild(rootElement);
+
+		for (PuzzleSolution solution : solutions) {
+			Element solutionNode = doc.createElement("solution");
+			rootElement.appendChild(solutionNode);
+
+			for (int h = 0; h < solution.getHousesLenght(); h++) {
+				House house = solution.getHouse(h);
+
+				Element houseNode = doc.createElement("house");
+				rootElement.appendChild(solutionNode);
+
+				for (String key : keys) {
+					Attr attr = doc.createAttribute(key);
+					attr.setValue(house.getProperty(key));
+					houseNode.setAttributeNode(attr);
+				}
+				solutionNode.appendChild(houseNode);
+			}
+		}
+
+		Transformer t = TransformerFactory.newInstance().newTransformer();
+		t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
+		t.setOutputProperty(OutputKeys.INDENT, "yes");
+		t.transform(new DOMSource(doc), new StreamResult(new File(path)));
+	}
+
+	/**
+	 * Generate XLS transformation based on input properties and template.xsl (from main/resources)
+	 * 
+	 * @param path path to output.xml to store template.xsl in same directory
+	 * @throws IOException
+	 */
+	public void writeXlsOutput(String path) throws IOException {
+		BufferedReader input = new BufferedReader(new FileReader("src/main/resources/template.xsl"));
+		Writer output = new BufferedWriter(new FileWriter(new File(path).getAbsoluteFile().getParent() + File.separator + "template.xsl"));
+		try {
+			String line = null;
+			String eol = System.getProperty("line.separator");
+			while ((line = input.readLine()) != null) {
+				if (line.contains("<!--PROPERTIES-->")) {
+					for (String key : keys) {
+						output.write("  <tr><th>" + key + "</th>" + eol);
+						output.write("    <xsl:for-each select=\"house/@" + key + "\">" + eol);
+						output.write("      <td><xsl:value-of select=\".\"/></td>" + eol);
+						output.write("    </xsl:for-each>" + eol);
+						output.write("  </tr>" + eol);
+					}
+				} else {
+					output.write(line + eol);
+				}
+			}
+		} finally {
+			input.close();
+			output.close();
+		}
+	}
 
 	public static void main(String[] args) throws Exception {
 		// Validate args for required paramenters (file paths) input.csv and output.xml
@@ -53,7 +195,8 @@ public class ZebraPuzzle {
 			System.exit(-1);
 		}
 
-		BruteForceAlgorithm puzzle = new BruteForceAlgorithm(args[0]);
+		BruteForceAlgorithm puzzle = new BruteForceAlgorithm();
+		puzzle.parseInputCSV(args[0]);
 		puzzle.generateValidSolutions();
 		puzzle.writeXMLOutput(args[1]);
 		puzzle.writeXlsOutput(args[1]);
