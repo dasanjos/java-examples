@@ -141,8 +141,12 @@ public abstract class ZebraPuzzle {
 				Element houseNode = doc.createElement("house");
 				rootElement.appendChild(solutionNode);
 
+				Attr attr = doc.createAttribute("position");
+				attr.setValue(house.getProperty("position"));
+				houseNode.setAttributeNode(attr);
+
 				for (String key : keys) {
-					Attr attr = doc.createAttribute(key);
+					attr = doc.createAttribute(key);
 					attr.setValue(house.getProperty(key));
 					houseNode.setAttributeNode(attr);
 				}
@@ -191,13 +195,13 @@ public abstract class ZebraPuzzle {
 		// Validate args for required paramenters (file paths) input.csv and output.xml
 		if (args.length < 2) {
 			System.out.println("Required arguments missing: Path to input CSV file and output XML file.");
-			System.out.println("Usage: java -jar ZebraPuzzle.jar path-to-input.csv path-to-output.xml");
+			System.out.println("Usage: java -jar ZebraPuzzle-1.0.jar path-to-input.csv path-to-output.xml");
 			System.exit(-1);
 		}
 
 		// Generic implementation for puzzle with 1 to 4 houses
 		// ZebraPuzzle puzzle = new GenericBruteForceAlgorithm();
-		
+
 		// Optimized implementation for puzzle with 5 houses
 		ZebraPuzzle puzzle = new OptimizedFiveHousesAlgorithm();
 		puzzle.parseInputCSV(args[0]);
