@@ -1,24 +1,6 @@
 package com.dasanjos.java;
 
-import java.io.File;
-import java.util.List;
-import java.util.Set;
-
-import javax.xml.parsers.DocumentBuilderFactory;
-import javax.xml.transform.OutputKeys;
-import javax.xml.transform.Transformer;
-import javax.xml.transform.TransformerFactory;
-import javax.xml.transform.dom.DOMSource;
-import javax.xml.transform.stream.StreamResult;
-
-import org.w3c.dom.Attr;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.ProcessingInstruction;
-
 import com.dasanjos.java.zebraPuzzle.BruteForceSolver;
-import com.dasanjos.java.zebraPuzzle.model.House;
-import com.dasanjos.java.zebraPuzzle.model.PuzzleSolution;
 
 /**
  * <p>
@@ -72,50 +54,8 @@ public class ZebraPuzzle {
 		}
 
 		BruteForceSolver puzzle = new BruteForceSolver(args[0]);
-		List<PuzzleSolution> solutions = puzzle.generateValidSolutions();
-		writeXMLOutput(solutions, args[1]);
-	}
-
-	/**
-	 * Create XML output file (with link to zebra.xls) for puzzle solutions
-	 * 
-	 * @param solutions List of Puzzle solutions
-	 * @param path path to output XML file
-	 * @throws Exception
-	 */
-	private static void writeXMLOutput(List<PuzzleSolution> solutions, String path) throws Exception {
-		Document doc = DocumentBuilderFactory.newInstance().newDocumentBuilder().newDocument();
-		doc.setXmlStandalone(true);
-
-		ProcessingInstruction pi = doc.createProcessingInstruction("xml-stylesheet", "type=\"text/xsl\" href=\"zebra.xsl\"");
-		doc.appendChild(pi);
-
-		Element rootElement = doc.createElement("solutions");
-		doc.appendChild(rootElement);
-
-		for (PuzzleSolution solution : solutions) {
-			Element solutionNode = doc.createElement("solution");
-			rootElement.appendChild(solutionNode);
-
-			for (int h = 0; h < solution.getHousesLenght(); h++) {
-				House house = solution.getHouse(h);
-
-				Element houseNode = doc.createElement("house");
-				rootElement.appendChild(solutionNode);
-
-				Set<String> keys = house.getKeys();
-				for (String key : keys) {
-					Attr attr = doc.createAttribute(key);
-					attr.setValue(house.getProperty(key));
-					houseNode.setAttributeNode(attr);
-				}
-				solutionNode.appendChild(houseNode);
-			}
-		}
-
-		Transformer t = TransformerFactory.newInstance().newTransformer();
-		t.setOutputProperty("{http://xml.apache.org/xslt}indent-amount", "2");
-		t.setOutputProperty(OutputKeys.INDENT, "yes");
-		t.transform(new DOMSource(doc), new StreamResult(new File(path)));
+		puzzle.generateValidSolutions();
+		puzzle.writeXMLOutput(args[1]);
+		puzzle.generateXlsOutput(args[1]);
 	}
 }
