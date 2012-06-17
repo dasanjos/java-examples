@@ -1,7 +1,6 @@
 package com.dasanjos.java.zebraPuzzle.model;
 
 import java.util.Arrays;
-import java.util.Iterator;
 import java.util.List;
 
 public class PuzzleSolution {
@@ -30,13 +29,12 @@ public class PuzzleSolution {
 	 * @return true if valid solution based on rules, false otherwise
 	 */
 	public boolean isValid(List<PuzzleRule> rules) {
-		boolean valid = true;
-		Iterator<PuzzleRule> iterator = rules.iterator();
-		while (valid && iterator.hasNext()) {
-			PuzzleRule rule = iterator.next();
-			valid = rule.isValidSolution(this);
+		for (PuzzleRule rule : rules) {
+			if (!rule.isValidSolution(this)) {
+				return false;
+			}
 		}
-		return valid;
+		return true;
 	}
 
 	@Override
