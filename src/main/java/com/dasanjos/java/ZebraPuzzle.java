@@ -1,6 +1,6 @@
 package com.dasanjos.java;
 
-import com.dasanjos.java.zebraPuzzle.BruteForceSolver;
+import com.dasanjos.java.zebraPuzzle.BruteForceAlgorithm;
 
 /**
  * <p>
@@ -46,16 +46,16 @@ import com.dasanjos.java.zebraPuzzle.BruteForceSolver;
 public class ZebraPuzzle {
 
 	public static void main(String[] args) throws Exception {
-		// Validate args for paramenters (filepaths) input.csv and output.xml
+		// Validate args for required paramenters (file paths) input.csv and output.xml
 		if (args.length < 2) {
 			System.out.println("Required arguments missing: Path to input CSV file and output XML file.");
 			System.out.println("Usage: java -jar ZebraPuzzle.jar path-to-input.csv path-to-output.xml");
 			System.exit(-1);
 		}
 
-		BruteForceSolver puzzle = new BruteForceSolver(args[0]);
+		BruteForceAlgorithm puzzle = new BruteForceAlgorithm(args[0]);
 		puzzle.generateValidSolutions();
 		puzzle.writeXMLOutput(args[1]);
-		puzzle.generateXlsOutput(args[1]);
+		puzzle.writeXlsOutput(args[1]);
 	}
 }

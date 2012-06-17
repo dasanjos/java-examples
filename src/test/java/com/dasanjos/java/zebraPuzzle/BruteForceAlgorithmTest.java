@@ -30,11 +30,11 @@ import com.dasanjos.java.zebraPuzzle.model.PuzzleRule;
  * </pre>
  * 
  */
-public class BruteForceSolverTest {
+public class BruteForceAlgorithmTest {
 
 	@Test
 	public void generateSolutionsOneHousesOneProperty() throws FileNotFoundException {
-		BruteForceSolver puzzle = new BruteForceSolver(new CSVReader("src/test/resources/input1.csv"));
+		BruteForceAlgorithm puzzle = new BruteForceAlgorithm(new CSVReader("src/test/resources/input1.csv"));
 
 		assertEquals(1, puzzle.houses);
 		assertEquals(1, puzzle.properties.size());
@@ -49,7 +49,7 @@ public class BruteForceSolverTest {
 
 	@Test
 	public void generateSolutionsTwoHousesTwoProperties() throws FileNotFoundException {
-		BruteForceSolver puzzle = new BruteForceSolver(new CSVReader("src/test/resources/input2.csv"));
+		BruteForceAlgorithm puzzle = new BruteForceAlgorithm(new CSVReader("src/test/resources/input2.csv"));
 
 		assertEquals(2, puzzle.houses);
 		assertEquals(4, puzzle.properties.size());
@@ -66,7 +66,7 @@ public class BruteForceSolverTest {
 
 	@Test
 	public void generateSolutionsThreeHousesThreeProperties() throws FileNotFoundException {
-		BruteForceSolver puzzle = new BruteForceSolver(new CSVReader("src/test/resources/input3.csv"));
+		BruteForceAlgorithm puzzle = new BruteForceAlgorithm(new CSVReader("src/test/resources/input3.csv"));
 
 		puzzle.generateValidSolutions();
 		assertEquals(1, puzzle.solutions.size()); // 3! ^ 3

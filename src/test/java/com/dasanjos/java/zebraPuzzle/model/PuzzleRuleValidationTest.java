@@ -7,7 +7,7 @@ import org.junit.Test;
 
 import com.dasanjos.java.util.Property;
 
-public class PuzzleRuleTest {
+public class PuzzleRuleValidationTest {
 
 	private PuzzleSolution solution;
 

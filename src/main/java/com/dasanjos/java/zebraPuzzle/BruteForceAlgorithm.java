@@ -9,6 +9,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.io.Writer;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Set;
 
@@ -36,7 +37,7 @@ import com.dasanjos.java.zebraPuzzle.model.PuzzleSolution;
  * Java Brute Force implementation of <a href="http://en.wikipedia.org/wiki/Zebra_Puzzle"> Zebra Puzzle</a> (also called Einstein's Puzzle) <br />
  * Generate solutions within seconds for puzzles with 1 to 4 houses, but it's impractical (hours) for 5 or more houses.
  */
-public class BruteForceSolver {
+public class BruteForceAlgorithm {
 
 	protected int houses;
 
@@ -46,11 +47,11 @@ public class BruteForceSolver {
 
 	protected List<PuzzleSolution> solutions;
 
-	public BruteForceSolver(String path) throws FileNotFoundException {
+	public BruteForceAlgorithm(String path) throws FileNotFoundException {
 		this(new CSVReader(path));
 	}
 
-	public BruteForceSolver(CSVReader reader) {
+	public BruteForceAlgorithm(CSVReader reader) {
 		properties = new ArrayList<Property>();
 		rules = new ArrayList<PuzzleRule>();
 		parseInputCSV(reader);
@@ -177,7 +178,7 @@ public class BruteForceSolver {
 	 * @param path path to output.xml to store template.xsl in same directory
 	 * @throws IOException
 	 */
-	public void generateXlsOutput(String path) throws IOException {
+	public void writeXlsOutput(String path) throws IOException {
 		BufferedReader input = new BufferedReader(new FileReader("src/main/resources/template.xsl"));
 		Writer output = new BufferedWriter(new FileWriter(new File(path).getAbsoluteFile().getParent() + File.separator + "template.xsl"));
 		try {
