@@ -30,7 +30,7 @@ import com.dasanjos.java.zebraPuzzle.model.PuzzleSolution;
  * </pre>
  * 
  */
-public class BruteForceAlgorithmTest {
+public class GenericBruteForceAlgorithmTest {
 
 	@Test
 	public void generateSolutionsOneHouse() throws FileNotFoundException {

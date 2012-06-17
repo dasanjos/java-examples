@@ -9,7 +9,7 @@ import org.junit.Test;
 
 import com.dasanjos.java.zebraPuzzle.model.PuzzleSolution;
 
-public class OptimizedBruteForceAlgorithmTest {
+public class OptimizedFiveHousesAlgorithmTest {
 
 	@Test
 	public void generateSolutionsFiveHouses() throws FileNotFoundException {
