@@ -1,4 +1,4 @@
 2
-SAME,nationality,Norwegian,color,Red
-SAME,nationality,Ukrainian,color,Blue
-LEFT,color,Red,color,Blue
+SAME;nationality;Norwegian;color;Red
+SAME;nationality;Ukrainian;color;Blue
+LEFT;color;Red;color;Blue

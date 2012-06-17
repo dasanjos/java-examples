@@ -1,6 +1,7 @@
 package com.dasanjos.java.zebraPuzzle.model;
 
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 public class House {
@@ -19,6 +20,10 @@ public class House {
 
 	public String getProperty(String key) {
 		return properties.get(key);
+	}
+
+	public Set<String> getKeys() {
+		return properties.keySet();
 	}
 
 	@Override

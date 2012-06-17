@@ -17,15 +17,14 @@ public class CSVReader {
 	private final BufferedReader reader;
 
 	/**
-	 * Parses a CSV file with configurable list of delimiters
+	 * Parses a CSV file with default delimiter (semicolon)
 	 * 
-	 * @param file CSV file to be parsed
-	 * @param delim String with delimiter used in CSV file
+	 * @param path path to CSV file to be parsed
 	 * @throws FileNotFoundException
 	 */
-	public CSVReader(File file, String delim) throws FileNotFoundException {
-		this.delim = delim;
-		this.reader = new BufferedReader(new FileReader(file));
+	public CSVReader(String path) throws FileNotFoundException {
+		this.delim = ";";
+		this.reader = new BufferedReader(new FileReader(new File(path)));
 	}
 
 	/**

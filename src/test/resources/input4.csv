@@ -1,11 +1,11 @@
 4
-SAME,nationality,English,color,Red
-SAME,drink,Tea,nationality,Ukrainian
-SAME,color,Ivory,nationality,Spaniard
-SAME,smoke,Kools,color,Yellow
-SAME,drink,Milk,position,3
-LEFT,smoke,Chesterfields,smoke,Old gold
-SAME,smoke,Kools,drink,Water
-SAME,smoke,Lucky strike,drink,Orange juice
-NEXT,color,Blue,nationality,Norwegian
-RIGHT,color,Ivory,color,Red
+SAME;nationality;English;color;Red
+SAME;drink;Tea;nationality;Ukrainian
+SAME;color;Ivory;nationality;Spaniard
+SAME;smoke;Kools;color;Yellow
+SAME;drink;Milk;position;3
+LEFT;smoke;Chesterfields;smoke;Old gold
+SAME;smoke;Kools;drink;Water
+SAME;smoke;Lucky strike;drink;Orange juice
+NEXT;color;Blue;nationality;Norwegian
+RIGHT;color;Ivory;color;Red

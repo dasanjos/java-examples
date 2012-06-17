@@ -1,7 +1,7 @@
 3
-SAME,nationality,Norwegian,position,1
-SAME,drink,Water,color,Yellow
-SAME,nationality,Ukrainian,color,Blue
-SAME,nationality,English,color,Red
-LEFT,drink,Water,drink,Tea
-LEFT,color,Blue,drink,Milk
+SAME;nationality;Norwegian;position;1
+SAME;drink;Water;color;Yellow
+SAME;nationality;Ukrainian;color;Blue
+SAME;nationality;English;color;Red
+LEFT;drink;Water;drink;Tea
+LEFT;color;Blue;drink;Milk

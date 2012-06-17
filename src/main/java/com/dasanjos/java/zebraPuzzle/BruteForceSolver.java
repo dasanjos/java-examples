@@ -1,9 +1,7 @@
 package com.dasanjos.java.zebraPuzzle;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 
 import com.dasanjos.java.util.Property;
@@ -14,46 +12,8 @@ import com.dasanjos.java.zebraPuzzle.model.PuzzleRule;
 import com.dasanjos.java.zebraPuzzle.model.PuzzleSolution;
 
 /**
- * <p>
  * Java Brute Force implementation of <a href="http://en.wikipedia.org/wiki/Zebra_Puzzle"> Zebra Puzzle</a> (also called Einstein's Puzzle) <br />
- * Generate solutions within seconds for puzzles with 1, 2, 3 or 4 houses, but takes hours to generate solutions for 5 houses.
- * </p>
- * 
- * <b>Example input file (input.csv)</b> <br />
- * 
- * <pre>
- * 5
- * SAME,nationality,English,color,Red
- * SAME,nationality,Spaniard,pet,Dog
- * SAME,drink,Coffee,color,Green
- * SAME,drink,Tea,nationality,Ukrainian
- * LEFT,color,Ivory,color,Green
- * SAME,smoke,Old gold,pet,Snails
- * SAME,smoke,Kools,color,Yellow
- * SAME,drink,Milk,position,3
- * SAME,nationality,Norwegian,position,1
- * NEXT,smoke,Chesterfields,pet,Fox
- * NEXT,smoke,Kools,pet,Horse
- * SAME,smoke,Lucky strike,drink,Orange juice
- * SAME,smoke,Parliaments,nationality,Japanese
- * NEXT,color,Blue,nationality,Norwegian
- * SAME,drink,Water
- * SAME,pet,Zebra
- * </pre>
- * 
- * <b>Example output file (output.xml)</b><br />
- * 
- * <pre>
- * &lt;solutions>
- *   &lt;solution>
- *     &lt;house position="1" color="Yellow" nationality="Norwegian" drink="Water"        smoke="Kools"         pet="Fox"/>
- *     &lt;house position="2" color="Blue"   nationality="Ukrainian" drink="Tea"          smoke="Chesterfields" pet="Horse"/>
- *     &lt;house position="3" color="Red"    nationality="English"   drink="Milk"         smoke="Old gold"      pet="Snails"/>
- *     &lt;house position="4" color="Ivory"  nationality="Spaniard"  drink="Orange juice" smoke="Lucky strike"  pet="Dog"/>
- *     &lt;house position="5" color="Green"  nationality="Japanese"  drink="Coffee"       smoke="Parliaments"   pet="Zebra"/>
- *   &lt;/solution>
- * &lt;/solutions>
- * </pre>
+ * Generate solutions within seconds for puzzles with 1 to 4 houses, but it's impractical (hours) for 5 or more houses.
  */
 public class BruteForceSolver {
 
@@ -63,8 +23,8 @@ public class BruteForceSolver {
 
 	protected List<PuzzleRule> rules;
 
-	public BruteForceSolver(File input) throws FileNotFoundException {
-		this(new CSVReader(input, ","));
+	public BruteForceSolver(String path) throws FileNotFoundException {
+		this(new CSVReader(path));
 	}
 
 	public BruteForceSolver(CSVReader reader) {
@@ -100,16 +60,20 @@ public class BruteForceSolver {
 	}
 
 	/**
-	 * Generate and validate all possible solutions based on the number of houses (rows) and number of unique properties (columns)
+	 * Generate all possible solutions based on the nr. of houses (rows) and nr. of properties (columns) and filter solutions based on rules
+	 * 
+	 * @return List of valid solutions
 	 */
 	public List<PuzzleSolution> generateValidSolutions() {
 		List<PuzzleSolution> solutions = new ArrayList<PuzzleSolution>();
 		List<String> keys = Property.getUniqueKeys(properties);
 
-		Integer[] permIndex = new Integer[houses]; // Initialize array of possible permutations indexes
+		// Initialize array of possible permutations indexes
+		Integer[] permIndex = new Integer[houses];
 		for (int nr = 0; nr < houses; nr++) {
 			permIndex[nr] = nr;
 		}
+
 		// Generate all permutations without repetition of properties (propNr!)
 		PermutationIterator<Integer> propPermutator = new PermutationIterator<Integer>(permIndex);
 		List<Integer[]> propPermutations = new ArrayList<Integer[]>();
@@ -117,17 +81,17 @@ public class BruteForceSolver {
 			propPermutations.add(propPermutator.next());
 		}
 
-		Integer[] solutionIndex = new Integer[propPermutations.size()]; // Initialize array of possible combinations indexes
+		// Initialize array of possible combinations indexes
+		Integer[] solutionIndex = new Integer[propPermutations.size()];
 		for (int nr = 0; nr < propPermutations.size(); nr++) {
 			solutionIndex[nr] = nr;
 		}
+
 		// Generate all permutations with repetition of previous permutations
 		PermutationWithRepetitionIterator<Integer> solPermutator = new PermutationWithRepetitionIterator<Integer>(solutionIndex, houses);
 		while (solPermutator.hasNext()) {
 			// Map this combination of Permutations to a Solution
 			Integer[] solPermutation = solPermutator.next();
-
-			// Initialize solution (Nr. of houses is same for each solution)
 			PuzzleSolution solution = new PuzzleSolution(houses);
 			for (int nr = 0; nr < houses; nr++) {
 				Integer[] propPermutation = propPermutations.get(solPermutation[nr]);
@@ -136,26 +100,10 @@ public class BruteForceSolver {
 					solution.getHouse(k).putProperty(key, Property.getValues(key, properties).get(propPermutation[k]));
 				}
 			}
-			if (validateSolution(solution)) {
+			if (solution.isValid(rules)) {
 				solutions.add(solution);
 			}
 		}
 		return solutions;
-	}
-
-	/**
-	 * Validate solution with all rules
-	 * 
-	 * @param solution the Solution being validated
-	 * @return true if valid solution based on rules, false otherwise
-	 */
-	public boolean validateSolution(PuzzleSolution solution) {
-		boolean valid = true;
-		Iterator<PuzzleRule> iterator = rules.iterator();
-		while (valid && iterator.hasNext()) {
-			PuzzleRule rule = iterator.next();
-			valid = rule.isValidSolution(solution);
-		}
-		return valid;
 	}
 }

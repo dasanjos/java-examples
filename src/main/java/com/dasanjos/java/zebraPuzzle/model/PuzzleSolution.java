@@ -1,6 +1,8 @@
 package com.dasanjos.java.zebraPuzzle.model;
 
 import java.util.Arrays;
+import java.util.Iterator;
+import java.util.List;
 
 public class PuzzleSolution {
 
@@ -19,6 +21,22 @@ public class PuzzleSolution {
 
 	public int getHousesLenght() {
 		return houses.length;
+	}
+
+	/**
+	 * Validate solution with all rules
+	 * 
+	 * @param rules List of PuzzleRules to validate solution
+	 * @return true if valid solution based on rules, false otherwise
+	 */
+	public boolean isValid(List<PuzzleRule> rules) {
+		boolean valid = true;
+		Iterator<PuzzleRule> iterator = rules.iterator();
+		while (valid && iterator.hasNext()) {
+			PuzzleRule rule = iterator.next();
+			valid = rule.isValidSolution(this);
+		}
+		return valid;
 	}
 
 	@Override

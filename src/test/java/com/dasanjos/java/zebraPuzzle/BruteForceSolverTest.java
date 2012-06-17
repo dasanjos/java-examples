@@ -2,7 +2,6 @@ package com.dasanjos.java.zebraPuzzle;
 
 import static junit.framework.Assert.assertEquals;
 
-import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.List;
 
@@ -36,9 +35,8 @@ import com.dasanjos.java.zebraPuzzle.model.PuzzleSolution;
 public class BruteForceSolverTest {
 
 	@Test
-	public void generateSolutionsOneHousesOneProperty() {
-		String input = "1\nSAME,nationality,Norwegian\n";
-		BruteForceSolver puzzle = new BruteForceSolver(new CSVReader(input, ","));
+	public void generateSolutionsOneHousesOneProperty() throws FileNotFoundException {
+		BruteForceSolver puzzle = new BruteForceSolver(new CSVReader("src/test/resources/input1.csv"));
 
 		assertEquals(1, puzzle.houses);
 		assertEquals(1, puzzle.properties.size());
@@ -53,7 +51,7 @@ public class BruteForceSolverTest {
 
 	@Test
 	public void generateSolutionsTwoHousesTwoProperties() throws FileNotFoundException {
-		BruteForceSolver puzzle = new BruteForceSolver(new CSVReader(new File("src/test/resources/input2.csv"), ","));
+		BruteForceSolver puzzle = new BruteForceSolver(new CSVReader("src/test/resources/input2.csv"));
 
 		assertEquals(2, puzzle.houses);
 		assertEquals(4, puzzle.properties.size());
@@ -70,12 +68,11 @@ public class BruteForceSolverTest {
 
 	@Test
 	public void generateSolutionsThreeHousesThreeProperties() throws FileNotFoundException {
-		BruteForceSolver puzzle = new BruteForceSolver(new CSVReader(new File("src/test/resources/input3.csv"), ","));
+		BruteForceSolver puzzle = new BruteForceSolver(new CSVReader("src/test/resources/input3.csv"));
 
-		String result = "[{color=Yellow, drink=Water, nationality=Norwegian, position=1},"
-				+ " {color=Blue, drink=Tea, nationality=Ukrainian, position=2}, " + "{color=Red, drink=Milk, nationality=English, position=3}]";
 		List<PuzzleSolution> s = puzzle.generateValidSolutions();
 		assertEquals(1, s.size()); // 3! ^ 3
-		assertEquals(result, s.get(0).toString());
+		assertEquals("[{color=Yellow, drink=Water, nationality=Norwegian, position=1}, {color=Blue, drink=Tea, nationality=Ukrainian, position=2}, "
+				+ "{color=Red, drink=Milk, nationality=English, position=3}]", s.get(0).toString());
 	}
 }
