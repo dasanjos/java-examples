@@ -10,10 +10,10 @@ import com.sun.jersey.api.client.WebResource;
 import com.sun.jersey.multipart.FormDataBodyPart;
 import com.sun.jersey.multipart.FormDataMultiPart;
 
-
 /**
  * 
- * Uploads cv.pdf to ZANOX REST Service (http://cvu.zanox.com/) using Jersey
+ * Uploads cv.pdf using Jersey to ZANOX REST Service - http://cvu.zanox.com/
+ * The method is "POST" and the form-data is encoded as "multipart/form-data"
  * 
  */
 public class RestClient {
