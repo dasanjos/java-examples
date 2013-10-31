@@ -32,6 +32,7 @@ Please implement the closestCommonManager method to find the closest manager (i.
 You may assume that all employees eventually report up to the CEO.   
 
 **Sample Data:**
+
 	CEO Bill has 3 employees reporting to him: {Dom, Samir, Michael}  
 	Dom has three reports { Peter, Bob, Porter}  
 	Samir has no reports {}  
@@ -43,6 +44,7 @@ You may assume that all employees eventually report up to the CEO.
 	Nina has no reports {}  
 
 **Sample calls:**
+
 	closestCommonManager(Milton, Nina) = Peter  
 	closestCommonManager(Nina, Porter) = Dom  
 	closestCommonManager(Nina, Samir) = Bill  
