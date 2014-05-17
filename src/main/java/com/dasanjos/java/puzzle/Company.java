@@ -4,6 +4,39 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Stack;
 
+/**
+ * <p>
+ * Java implementation of 2013 Test Task - Who's Our Boss
+ * </p>
+ * 
+ * <b>Definition:</b>
+ * 
+ * Initech is a company which has CEO Bill and a hierarchy of employees. 
+ * Employees can have a list of other employees reporting to them, which can themselves have reports, and so on. 
+ * An employee with at least one report is called a manager.  
+ * 
+ * Please implement the closestCommonManager method to find the closest manager (i.e. farthest from the CEO) to two employees. 
+ * You may assume that all employees eventually report up to the CEO.   
+ * 
+ * <pre>
+ * **Sample Data:**
+ * 	CEO Bill has 3 employees reporting to him: {Dom, Samir, Michael}  
+ * 	Dom has three reports { Peter, Bob, Porter}  
+ * 	Samir has no reports {}  
+ * 	Michael has no reports {}  
+ * 	Peter has 2 reports {Milton, Nina}  
+ * 	Bob has no reports {}  
+ * 	Porter has no reports {}  
+ * 	Milton has no reports {}  
+ * 	Nina has no reports {}  
+ * 
+ * **Sample calls:**
+ * 	closestCommonManager(Milton, Nina) = Peter  
+ * 	closestCommonManager(Nina, Porter) = Dom  
+ * 	closestCommonManager(Nina, Samir) = Bill  
+ * 	closestCommonManager(Peter, Nina) = Peter
+ * </pre>
+ */
 public class Company {
 
 	// IMPORTANT: DO NOT MODIFY THIS CLASS
