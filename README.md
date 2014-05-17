@@ -3,16 +3,22 @@ java-examples
 
 Java implementation of algorithms, several puzzles and programming test tasks (with JUnit tests). 
 
-### List of Examples:
+### Examples:
 
-* Look Ahead Iterator - 
 * Fibbonaci (Numbers, Sum, Average) - http://en.wikipedia.org/wiki/Fibonacci_number 
 
-### List of Puzzles:
+### Sorting:
+
+* Bubble Sort - http://en.wikipedia.org/wiki/Bubble_sort
+* Quick Sort - 
+* Merge Sort - 
+
+### Puzzles:
 
 * Company - Who's Our Boss (2013)
 * Decathlon - 
 * FizzBuzz - http://en.wikipedia.org/wiki/Bizz_buzz
+* Look Ahead Iterator - 
 * Zebra Puzzle - http://en.wikipedia.org/wiki/Zebra_Puzzle
 
 ### TODO: 
