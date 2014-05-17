@@ -3,15 +3,36 @@ java-examples
 
 Java implementation of algorithms, several puzzles and programming test tasks (with JUnit tests). 
 
-### Examples:
+### Java Language
 
-* Fibbonaci (Numbers, Sum, Average) - http://en.wikipedia.org/wiki/Fibonacci_number 
+* Collections: Stack, Map, List or Set, Queue, hashtable
+* Bits and Bytes
+* String
 
-### Sorting:
+### Math problems:
 
-* Bubble Sort - http://en.wikipedia.org/wiki/Bubble_sort
-* Quick Sort - 
-* Merge Sort - 
+* Fibbonaci numbers - http://en.wikipedia.org/wiki/Fibonacci_number 
+* Prime numbers
+* Geometry
+* Tower of Hanoi - 
+
+### Sorting & Searching:
+
+* [Bubble Sort](http://en.wikipedia.org/wiki/Bubble_sort) 
+* [Merge Sort](http://en.wikipedia.org/wiki/Merge_sort) 
+* [Quick Sort](http://en.wikipedia.org/wiki/Quick_Sort) 
+
+### Algorithms & Data Structures:
+
+* Arrays
+* Vectors
+* Linked lists
+* Hashtables
+* Strings
+* Trees
+* Graphs
+* Traveling Salesman
+* Knapsack problem
 
 ### Puzzles:
 

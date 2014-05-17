@@ -8,21 +8,20 @@ package com.dasanjos.java.sort;
  */
 public class BubbleSort {
 
-	public static void sort(int[] input) {
+	public static void bubbleSort(int[] input) {
 		for (int i = 0; i < input.length - 1; i++) {
 			for (int j = i; j < input.length; j++) {
 				if (input[i] > input[j]) {
-					swapInPlace(input, i, j);
+					swap(input, i, j);
 				}
 			}
 		}
 	}
 
 	static void swap(int[] input, int i, int j) {
-		int swap;
-		swap = input[i];
+		int temp = input[i];
 		input[i] = input[j];
-		input[j] = swap;
+		input[j] = temp;
 	}
 
 	static void swapInPlace(int[] input, int i, int j) {
