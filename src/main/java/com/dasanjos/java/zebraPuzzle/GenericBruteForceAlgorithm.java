@@ -3,7 +3,7 @@ package com.dasanjos.java.zebraPuzzle;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.dasanjos.java.ZebraPuzzle;
+import com.dasanjos.java.puzzle.ZebraPuzzle;
 import com.dasanjos.java.util.Property;
 import com.dasanjos.java.util.math.PermutationIterator;
 import com.dasanjos.java.util.math.PermutationWithRepetitionIterator;

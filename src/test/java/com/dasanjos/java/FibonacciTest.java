@@ -26,7 +26,7 @@ public class FibonacciTest {
 
 	@Test
 	public void calculateAverageFibonacci() {
-		double sum = 0;
+		long sum = 0;
 		for (int i = 1; i < fib.length; i++) {
 			sum += fib[i];
 			Assert.assertEquals(sum / i, Fibonacci.fibAverage(i), 0.1);
