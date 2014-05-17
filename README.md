@@ -6,7 +6,7 @@ Java implementation of several puzzles and programming test tasks (with JUnit te
 List of Examples:
 -----------------
 
-* Company - Who's Our Boss (Amazon 2013)
+* Company - Who's Our Boss (2013)
 * Decathlon - 
 * Look Ahead Iterator - 
 * Fibbonaci (Numbers, Sum, Average) - http://en.wikipedia.org/wiki/Fibonacci_number 
@@ -22,7 +22,7 @@ TODO:
 * Read: http://java.sun.com/developer/technicalArticles/Interviews/community/pepperdine_qa.html
 
 
-### Amazon 2013 Test Task - Who's Our Boss
+### 2013 Test Task - Who's Our Boss
 
 Initech is a company which has CEO Bill and a hierarchy of employees. 
 Employees can have a list of other employees reporting to them, which can themselves have reports, and so on. 
