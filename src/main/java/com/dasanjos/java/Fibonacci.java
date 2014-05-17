@@ -2,6 +2,11 @@ package com.dasanjos.java;
 
 public class Fibonacci {
 
+	private static int[] table = new int[100];
+
+	/**
+	 * Calculates Fibonacci number recursively - complexity: O(2^n)
+	 */
 	public static int fibNumber(int n) {
 		if (n <= 1) {
 			return n;
@@ -10,8 +15,9 @@ public class Fibonacci {
 		}
 	}
 
-	private static int[] table = new int[100];
-
+	/**
+	 * Calculates Fibonacci number dynamically - complexity: O(n)
+	 */
 	public static int fibNumberDynamic(int n) {
 		if (n <= 1) {
 			return n;
@@ -22,10 +28,16 @@ public class Fibonacci {
 		}
 	}
 
+	/**
+	 * Calculates the average of n first Fibonacci numbers - complexity: O(n)
+	 */
 	public static double fibAverage(int n) {
 		return fibSum(n) / n;
 	}
 
+	/**
+	 * Calculates the sum of n first Fibonacci numbers - complexity: O(n)
+	 */
 	public static long fibSum(int n) {
 		long sum = 0;
 		long fibNr = 1;
