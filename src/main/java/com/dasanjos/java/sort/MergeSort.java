@@ -6,6 +6,7 @@ package com.dasanjos.java.sort;
  * merging it back in order.<br>
  * Complexity: Worst case O(nlogn), Best case O(n), Average case O(nlogn)
  */
+//TODO Skiena 122 (pdf 134)
 public class MergeSort {
 
 	int[] tmp;
