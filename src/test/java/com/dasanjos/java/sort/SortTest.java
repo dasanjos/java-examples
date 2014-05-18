@@ -1,4 +1,4 @@
-package com.dasanjos.java;
+package com.dasanjos.java.sort;
 
 import java.util.Arrays;
 import java.util.Random;
@@ -7,12 +7,9 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.dasanjos.java.sort.BubbleSort;
-import com.dasanjos.java.sort.MergeSort;
-import com.dasanjos.java.sort.QuickSort;
 import com.dasanjos.java.util.TimeTracker;
 
-public class SortingTest extends TimeTracker {
+public class SortTest extends TimeTracker {
 
 	static final int ARRAY_SIZE = 10000;
 	int[] numbers;
@@ -53,6 +50,12 @@ public class SortingTest extends TimeTracker {
 	@Test
 	public void quickSort() {
 		QuickSort.sort(numbers);
+		verifySorting(numbers);
+	}
+
+	@Test
+	public void heapSort() {
+		HeapSort.sort(numbers);
 		verifySorting(numbers);
 	}
 

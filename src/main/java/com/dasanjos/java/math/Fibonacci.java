@@ -1,4 +1,4 @@
-package com.dasanjos.java;
+package com.dasanjos.java.math;
 
 public class Fibonacci {
 

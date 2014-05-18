@@ -2,23 +2,27 @@ java-examples
 =============
 
 Java implementation of algorithms, several puzzles and programming test tasks (with JUnit tests). 
+NB: Items with links are done, without links are TODO :)
 
 ### Java Language
 
-* Java Collections: Stack, Map, List or Set, Queue, Hashtable
+* Java Collections: Stack, Map, List, Set, Queue, HashMap - http://www.javapractices.com/topic/TopicAction.do?Id=65
 * Bits and Bytes
 
 ### Math problems:
 
 * [Fibbonaci numbers](http://en.wikipedia.org/wiki/Fibonacci_number)
+* [Factorial numbers](http://en.wikipedia.org/wiki/Factorial)
 * Prime numbers
 * Geometry
-* Tower of Hanoi - 
+* Tower of Hanoi
+* Traveling Salesman
+* Knapsack problem
 
 ### Sorting & Searching:
 
 * [Bubble Sort](http://en.wikipedia.org/wiki/Bubble_sort) 
-* Heap Sort
+* Heap Sort - http://en.wikipedia.org/wiki/Heapsort
 * [Merge Sort](http://en.wikipedia.org/wiki/Merge_sort) 
 * [Quick Sort](http://en.wikipedia.org/wiki/Quick_Sort) 
 * [Binary Search](http://en.wikipedia.org/wiki/Binary_search_algorithm)
@@ -26,24 +30,22 @@ Java implementation of algorithms, several puzzles and programming test tasks (w
 ### Algorithms & Data Structures:
 
 * [Hash Table](http://en.wikipedia.org/wiki/Hash_table)
-* Strings
-* Trees
+* [Binary Heap](http://en.wikipedia.org/wiki/Binary_heap)
+* Binary Search Tree
 * Graphs
-* Traveling Salesman
-* Knapsack problem
 
 ### String problems
 
 * [String matching](http://en.wikipedia.org/wiki/String_searching_algorithm)
 *
 
-### Puzzles:
+### Puzzles and Tests:
 
-* Company - Who's Our Boss (2013)
-* Decathlon - 
-* FizzBuzz - http://en.wikipedia.org/wiki/Bizz_buzz
-* Look Ahead Iterator - 
-* Zebra Puzzle - http://en.wikipedia.org/wiki/Zebra_Puzzle
+* [Company (Who's Our Boss)](http://www.careercup.com/forumpost?id=4865236729331712)
+* Decathlon - (2011)
+* [FizzBuzz](http://en.wikipedia.org/wiki/Bizz_buzz)
+* [Look Ahead Iterator](http://www.careercup.com/question?id=16910673) 
+* [Zebra Puzzle](http://en.wikipedia.org/wiki/Zebra_Puzzle)
 
 ### TODO: 
 

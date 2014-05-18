@@ -1,4 +1,4 @@
-package com.dasanjos.java;
+package com.dasanjos.java.search;
 
 import java.util.Arrays;
 import java.util.Random;
