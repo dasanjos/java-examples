@@ -7,7 +7,6 @@ Java implementation of algorithms, several puzzles and programming test tasks (w
 
 * Collections: Stack, Map, List or Set, Queue, hashtable
 * Bits and Bytes
-* String
 
 ### Math problems:
 
@@ -34,6 +33,11 @@ Java implementation of algorithms, several puzzles and programming test tasks (w
 * Graphs
 * Traveling Salesman
 * Knapsack problem
+
+### String problems
+
+* [String matching](http://en.wikipedia.org/wiki/String_searching_algorithm)
+*
 
 ### Puzzles:
 
