@@ -7,38 +7,38 @@ public class Fibonacci {
 	/**
 	 * Calculates Fibonacci number recursively - complexity: O(2^n)
 	 */
-	public static int fibNumber(int n) {
+	public static int recursive(int n) {
 		if (n <= 1) {
 			return n;
 		} else {
-			return fibNumber(n - 1) + fibNumber(n - 2);
+			return recursive(n - 1) + recursive(n - 2);
 		}
 	}
 
 	/**
 	 * Calculates Fibonacci number dynamically - complexity: O(n)
 	 */
-	public static int fibNumberDynamic(int n) {
+	public static int dynamic(int n) {
 		if (n <= 1) {
 			return n;
 		} else if (table[n] != 0) {
 			return table[n];
 		} else {
-			return table[n] = fibNumberDynamic(n - 1) + fibNumberDynamic(n - 2);
+			return table[n] = dynamic(n - 1) + dynamic(n - 2);
 		}
 	}
 
 	/**
 	 * Calculates the average of n first Fibonacci numbers - complexity: O(n)
 	 */
-	public static double fibAverage(int n) {
-		return fibSum(n) / n;
+	public static double average(int n) {
+		return sum(n) / n;
 	}
 
 	/**
-	 * Calculates the sum of n first Fibonacci numbers - complexity: O(n)
+	 * Calculates the sum of n first Fibonacci numbers - Complexity: O(n)
 	 */
-	public static long fibSum(int n) {
+	public static long sum(int n) {
 		long sum = 0;
 		long fibNr = 1;
 		long fibOne = 0;

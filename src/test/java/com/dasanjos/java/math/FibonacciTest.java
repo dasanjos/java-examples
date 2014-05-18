@@ -3,10 +3,9 @@ package com.dasanjos.java.math;
 import org.junit.Assert;
 import org.junit.Test;
 
-import com.dasanjos.java.math.Fibonacci;
 import com.dasanjos.java.util.TimeTracker;
 
-public class FibonacciTest extends TimeTracker{
+public class FibonacciTest extends TimeTracker {
 
 	// First 40 Fibonacci numbers (pre calculated values)
 	int[] fib = { 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, 377, 610,
@@ -17,14 +16,14 @@ public class FibonacciTest extends TimeTracker{
 	@Test
 	public void calculateFibonacciNumbersWithRecursion() {
 		for (int i = 0; i < fib.length; i++) {
-			Assert.assertEquals(fib[i], Fibonacci.fibNumber(i));
+			Assert.assertEquals(fib[i], Fibonacci.recursive(i));
 		}
 	}
 
 	@Test
 	public void calculateFibonacciNumbersDynamicly() {
 		for (int i = 0; i < fib.length; i++) {
-			Assert.assertEquals(fib[i], Fibonacci.fibNumberDynamic(i));
+			Assert.assertEquals(fib[i], Fibonacci.dynamic(i));
 		}
 	}
 
@@ -33,7 +32,7 @@ public class FibonacciTest extends TimeTracker{
 		long sum = 0;
 		for (int i = 1; i < fib.length; i++) {
 			sum += fib[i];
-			Assert.assertEquals(sum, Fibonacci.fibSum(i), 0.1);
+			Assert.assertEquals(sum, Fibonacci.sum(i), 0.1);
 		}
 	}
 
@@ -42,7 +41,7 @@ public class FibonacciTest extends TimeTracker{
 		long sum = 0;
 		for (int i = 1; i < fib.length; i++) {
 			sum += fib[i];
-			Assert.assertEquals(sum / i, Fibonacci.fibAverage(i), 0.1);
+			Assert.assertEquals(sum / i, Fibonacci.average(i), 0.1);
 		}
 	}
 }

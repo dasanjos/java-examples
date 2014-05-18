@@ -24,6 +24,7 @@ public class BinaryHeap {
 	}
 
 	// TODO Implement Build Heap - O(n)
+	// http://courses.cs.vt.edu/~cs2604/spring02/Notes/C07.Heaps.pdf
 	public BinaryHeap(int[] input, int lenght) {
 		throw new NotImplementedException();
 	}
@@ -60,6 +61,8 @@ public class BinaryHeap {
 		return min;
 	}
 
+	// Review PercDown and PercUp
+	// http://courses.cs.washington.edu/courses/cse373/02au/lectures/lecture11l.pdf
 	private void percolateDown() {
 		int index = 1;
 		while (true) {
