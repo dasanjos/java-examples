@@ -14,7 +14,7 @@ import com.dasanjos.java.util.TimeTracker;
 
 public class SortingTest extends TimeTracker {
 
-	static final int ARRAY_SIZE = 20000;
+	static final int ARRAY_SIZE = 10000;
 	int[] numbers;
 
 	@Before
@@ -27,31 +27,31 @@ public class SortingTest extends TimeTracker {
 	}
 
 	@Test
-	public void testJavaSort() {
+	public void javaSort() {
 		Arrays.sort(numbers);
 		verifySorting(numbers);
 	}
 
 	@Test
-	public void testBubbleSort() {
+	public void bubbleSort() {
 		BubbleSort.sort(numbers);
 		verifySorting(numbers);
 	}
 
 	@Test
-	public void testBubbleSortModified() {
+	public void bubbleSortModified() {
 		BubbleSort.sortModified(numbers);
 		verifySorting(numbers);
 	}
 
 	@Test
-	public void testMergeSort() {
+	public void mergeSort() {
 		new MergeSort(numbers).sort(numbers);
 		verifySorting(numbers);
 	}
 
 	@Test
-	public void testQuickSort() {
+	public void quickSort() {
 		QuickSort.sort(numbers);
 		verifySorting(numbers);
 	}

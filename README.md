@@ -21,6 +21,7 @@ Java implementation of algorithms, several puzzles and programming test tasks (w
 * [Bubble Sort](http://en.wikipedia.org/wiki/Bubble_sort) 
 * [Merge Sort](http://en.wikipedia.org/wiki/Merge_sort) 
 * [Quick Sort](http://en.wikipedia.org/wiki/Quick_Sort) 
+* [Binary Search](http://en.wikipedia.org/wiki/Binary_search_algorithm)
 
 ### Algorithms & Data Structures:
 
