@@ -8,7 +8,7 @@ package com.dasanjos.java.string;
 public class StringMatching {
 
 	/**
-	 * Näive is a linear search algorithm that checks if a pattern (String size
+	 * Naive is a linear search algorithm that checks if a pattern (String size
 	 * p) is present inside a text (string size t), returning true if finds a
 	 * matching substring of text with pattern input size or false if not found. <br>
 	 * Complexity: Worst case O(p*t), Best case O(p), Average case O(p*t)
