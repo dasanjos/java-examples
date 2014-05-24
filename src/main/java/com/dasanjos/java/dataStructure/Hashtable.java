@@ -9,14 +9,14 @@ package com.dasanjos.java.dataStructure;
 
 public class HashTable {
 
-	private Node[] nodes;
+	private HTNode[] nodes;
 	private int capacity;
 	private int size;
 
 	public HashTable(int capacity) {
 		this.size = 0;
 		this.capacity = capacity;
-		this.nodes = new Node[capacity + 1];
+		this.nodes = new HTNode[capacity + 1];
 	}
 
 	public void insert(String key, String value) {
@@ -28,11 +28,11 @@ public class HashTable {
 		while (!isEmpty(nodes[i])) {
 			i++;
 		}
-		nodes[i] = new Node(key, value);
+		nodes[i] = new HTNode(key, value);
 		size++;
 	}
 
-	public Node search(String key) {
+	public HTNode search(String key) {
 		int i = hash(key);
 
 		if (isEmpty(nodes[i])) {
@@ -52,7 +52,7 @@ public class HashTable {
 	}
 
 	public void delete(String key) {
-		Node n = search(key);
+		HTNode n = search(key);
 		if (n != null) {
 			n.setDeleted(true);
 			size--;
@@ -71,14 +71,14 @@ public class HashTable {
 		return hash % capacity;
 	}
 
-	private boolean isEmpty(Node node) {
+	private boolean isEmpty(HTNode node) {
 		return node == null || node.isDeleted();
 	}
 
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder("HashTable:|");
-		for (Node node : nodes) {
+		for (HTNode node : nodes) {
 			sb.append(isEmpty(node) ? "-" : node.toString());
 			sb.append('|');
 		}
@@ -86,12 +86,12 @@ public class HashTable {
 	}
 }
 
-class Node {
+class HTNode {
 	private String key;
 	private String value;
 	private boolean deleted;
 
-	public Node(String key, String value) {
+	public HTNode(String key, String value) {
 		this.key = key;
 		this.value = value;
 	}

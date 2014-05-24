@@ -13,26 +13,26 @@ import java.util.Queue;
  * 
  */
 public class BinarySearchTree {
-	TreeNode root;
+	BSTNode root;
 
 	public void insertRecursive(int data) {
 		if (root == null) {
-			root = new TreeNode(data);
+			root = new BSTNode(data);
 		} else {
 			insertRecursive(root, data);
 		}
 	}
 
-	private void insertRecursive(TreeNode node, int data) {
+	private void insertRecursive(BSTNode node, int data) {
 		if (data < node.data) {
 			if (node.left == null) {
-				node.left = new TreeNode(data);
+				node.left = new BSTNode(data);
 			} else {
 				insertRecursive(node.left, data);
 			}
 		} else {
 			if (node.right == null) {
-				node.right = new TreeNode(data);
+				node.right = new BSTNode(data);
 			} else {
 				insertRecursive(node.right, data);
 			}
@@ -40,12 +40,12 @@ public class BinarySearchTree {
 	}
 
 	public void insertIterative(int data) {
-		TreeNode newNode = new TreeNode(data);
+		BSTNode newNode = new BSTNode(data);
 		if (root == null) {
 			root = newNode;
 		} else {
-			TreeNode focus = root;
-			TreeNode parent;
+			BSTNode focus = root;
+			BSTNode parent;
 			// remove infinite loop
 			while (true) {
 				parent = focus;
@@ -66,11 +66,11 @@ public class BinarySearchTree {
 		}
 	}
 
-	public TreeNode findRecursive(int data) {
+	public BSTNode findRecursive(int data) {
 		return findRecursive(root, data);
 	}
 
-	private TreeNode findRecursive(TreeNode node, int data) {
+	private BSTNode findRecursive(BSTNode node, int data) {
 		if (node == null || node.data == data) {
 			return node;
 		} else if (data < node.data) {
@@ -80,8 +80,8 @@ public class BinarySearchTree {
 		}
 	}
 
-	public TreeNode findIterative(int data) {
-		TreeNode focus = root;
+	public BSTNode findIterative(int data) {
+		BSTNode focus = root;
 		while (focus != null) {
 			if (focus.data == data) {
 				return focus;
@@ -98,7 +98,7 @@ public class BinarySearchTree {
 		return traversePreOrder(root);
 	}
 
-	private List<Integer> traversePreOrder(TreeNode node) {
+	private List<Integer> traversePreOrder(BSTNode node) {
 		List<Integer> result = new ArrayList<Integer>();
 		if (node != null) {
 			result.add(process(node));
@@ -112,7 +112,7 @@ public class BinarySearchTree {
 		return traverseInOrder(root);
 	}
 
-	private List<Integer> traverseInOrder(TreeNode node) {
+	private List<Integer> traverseInOrder(BSTNode node) {
 		List<Integer> result = new ArrayList<Integer>();
 		if (node != null) {
 			result.addAll(traverseInOrder(node.left));
@@ -126,7 +126,7 @@ public class BinarySearchTree {
 		return traversePostOrder(root);
 	}
 
-	private List<Integer> traversePostOrder(TreeNode node) {
+	private List<Integer> traversePostOrder(BSTNode node) {
 		List<Integer> result = new ArrayList<Integer>();
 		if (node != null) {
 			result.addAll(traversePostOrder(node.left));
@@ -138,10 +138,10 @@ public class BinarySearchTree {
 
 	public List<Integer> traverseBreadthFirst() {
 		List<Integer> result = new ArrayList<Integer>();
-		Queue<TreeNode> q = new LinkedList<TreeNode>();
+		Queue<BSTNode> q = new LinkedList<BSTNode>();
 		q.add(root);
 		while (!q.isEmpty()) {
-			TreeNode node = q.remove();
+			BSTNode node = q.remove();
 
 			result.add(process(node));
 
@@ -155,7 +155,7 @@ public class BinarySearchTree {
 		return result;
 	}
 
-	private Integer process(TreeNode node) {
+	private Integer process(BSTNode node) {
 		return (node != null ? node.data : null);
 	}
 
@@ -163,11 +163,11 @@ public class BinarySearchTree {
 		return isBST(root, Integer.MAX_VALUE, Integer.MIN_VALUE);
 	}
 
-	private boolean isBST(TreeNode node, int leftData, int rightData) {
+	private boolean isBST(BSTNode node, int leftData, int rightData) {
 		if (node == null)
 			return true;
 
-		if (node.data > leftData || node.data <= rightData) {
+		if (node.data > leftData || node.data < rightData) {
 			return false;
 		}
 
@@ -181,27 +181,27 @@ public class BinarySearchTree {
 }
 
 // TODO use generics for data
-class TreeNode {
+class BSTNode {
 	int data;
-	TreeNode left;
-	TreeNode right;
+	BSTNode left;
+	BSTNode right;
 
-	TreeNode(int data) {
+	BSTNode(int data) {
 		this.data = data;
 	}
 
 	@Override
 	public String toString() {
-		return "<" + String.valueOf(data) + ">";
+		return "<" + data + ">";
 	}
 
 	void print(String prefix, boolean isLast) {
 		System.out.println(prefix + (isLast ? "L--" : "|--") + data);
-		if (left != null) {
-			left.print(prefix + (isLast ? "   " : "|  "), (right == null));
-		}
 		if (right != null) {
-			right.print(prefix + (isLast ? "   " : "|  "), true);
+			right.print(prefix + (isLast ? "   " : "|  "), (left == null));
+		}
+		if (left != null) {
+			left.print(prefix + (isLast ? "   " : "|  "), true);
 		}
 	}
 }

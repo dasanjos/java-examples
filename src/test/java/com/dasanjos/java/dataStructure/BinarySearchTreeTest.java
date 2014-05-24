@@ -1,13 +1,18 @@
 package com.dasanjos.java.dataStructure;
 
 import java.util.List;
+import java.util.Random;
 
 import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-public class BinarySearchTreeTest {
+import com.dasanjos.java.util.TimeTracker;
 
+public class BinarySearchTreeTest extends TimeTracker {
+
+	private static final int MAX_SIZE = 100000;
+	private Random r = new Random();
 	private BinarySearchTree bst;
 
 	@Before
@@ -17,63 +22,69 @@ public class BinarySearchTreeTest {
 
 	@Test
 	public void insertRecursive() {
-		insertElementsRecursive();
-		bst.print();
+		insertRandomRecursive();
+		Assert.assertTrue(bst.isBinarySearchTree());
 	}
 
 	@Test
 	public void insertIterative() {
-		insertElementsIterative();
+		insertRandomIterative();
+		Assert.assertTrue(bst.isBinarySearchTree());
 	}
 
 	@Test
 	public void findRecursive() {
-		insertElementsRecursive();
+		int last = insertRandomIterative();
 
-		TreeNode result = bst.findRecursive(9);
+		BSTNode result = bst.findRecursive(last);
 		Assert.assertNotNull(result);
-		Assert.assertEquals("<9>", result.toString());
+		Assert.assertEquals("<" + last + ">", result.toString());
 	}
 
 	@Test
 	public void findRecursiveNonExistingElement() {
-		insertElementsRecursive();
+		insertRandomIterative();
 
-		Assert.assertNull(bst.findRecursive(11));
+		Assert.assertNull(bst.findRecursive(-1));
 	}
 
 	@Test
 	public void findIterative() {
-		insertElementsIterative();
+		int last = insertRandomIterative();
 
-		TreeNode result = bst.findIterative(9);
+		BSTNode result = bst.findIterative(last);
 		Assert.assertNotNull(result);
-		Assert.assertEquals("<9>", result.toString());
+		Assert.assertEquals("<" + last + ">", result.toString());
 	}
 
 	@Test
 	public void findIterativeNonExistingElement() {
-		insertElementsIterative();
+		insertRandomIterative();
 
-		Assert.assertNull(bst.findIterative(11));
+		Assert.assertNull(bst.findRecursive(-1));
+	}
+
+	@Test
+	public void deleteNode() {
+		Assert.fail("not implemented");
 	}
 
 	@Test
 	public void traversePreOrder() {
-		insertElementsRecursive();
+		insertElementsIterative();
 
 		List<Integer> result = bst.traversePreOrder();
 		Assert.assertNotNull(result);
-		Assert.assertEquals("[7, 5, 2, 4, 9, 8]", result.toString());
+		Assert.assertEquals("[7, 5, 4, 6, 9, 8, 10]", result.toString());
 	}
 
 	@Test
 	public void traverseInOrder() {
-		insertElementsRecursive();
+		insertElementsIterative();
 
 		List<Integer> result = bst.traverseInOrder();
 		Assert.assertNotNull(result);
-		Assert.assertEquals("[2, 4, 5, 7, 8, 9]", result.toString());
+		Assert.assertEquals("[4, 5, 6, 7, 8, 9, 10]", result.toString());
 	}
 
 	@Test
@@ -82,7 +93,7 @@ public class BinarySearchTreeTest {
 
 		List<Integer> result = bst.traversePostOrder();
 		Assert.assertNotNull(result);
-		Assert.assertEquals("[4, 2, 5, 8, 9, 7]", result.toString());
+		Assert.assertEquals("[4, 6, 5, 8, 10, 9, 7]", result.toString());
 	}
 
 	@Test
@@ -91,24 +102,46 @@ public class BinarySearchTreeTest {
 
 		List<Integer> result = bst.traverseBreadthFirst();
 		Assert.assertNotNull(result);
-		Assert.assertEquals("[7, 5, 9, 2, 8, 4]", result.toString());
+		Assert.assertEquals("[7, 5, 9, 4, 6, 8, 10]", result.toString());
 	}
 
 	private void insertElementsRecursive() {
 		bst.insertRecursive(7);
 		bst.insertRecursive(5);
 		bst.insertRecursive(9);
-		bst.insertRecursive(2);
+		bst.insertRecursive(6);
 		bst.insertRecursive(4);
 		bst.insertRecursive(8);
+		bst.insertRecursive(10);
+
+	}
+
+	private int insertRandomRecursive() {
+		int lastInserted = 0;
+		for (int i = 0; i < MAX_SIZE; i++) {
+			lastInserted = r.nextInt(MAX_SIZE);
+			bst.insertRecursive(lastInserted);
+		}
+		return lastInserted;
 	}
 
 	private void insertElementsIterative() {
 		bst.insertIterative(7);
 		bst.insertIterative(5);
 		bst.insertIterative(9);
-		bst.insertIterative(2);
+		bst.insertIterative(6);
 		bst.insertIterative(4);
 		bst.insertIterative(8);
+		bst.insertIterative(10);
 	}
+
+	private int insertRandomIterative() {
+		int lastInserted = 0;
+		for (int i = 0; i < MAX_SIZE; i++) {
+			lastInserted = r.nextInt(MAX_SIZE);
+			bst.insertIterative(lastInserted);
+		}
+		return lastInserted;
+	}
+
 }

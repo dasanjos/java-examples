@@ -7,14 +7,13 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.dasanjos.java.search.BinarySearch;
 import com.dasanjos.java.util.TimeTracker;
 
 public class SearchTest extends TimeTracker {
 
-	static final int ARRAY_SIZE = 1000000;
-	int[] numbers;
-	int value;
+	private static final int ARRAY_SIZE = 1000000;
+	private int[] numbers;
+	private int value;
 
 	@Before
 	public void setup() {
