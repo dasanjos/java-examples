@@ -10,7 +10,7 @@ import java.util.Queue;
  * tree is a binary tree where the left child contains nodes with values less
  * than the parent node and where the right child only contains nodes with
  * values greater than or equal to the parent. <br>
- * Complexity: Space O(n), findMin O(logn), insert O(logn), delete O(logn)
+ * Complexity: Search/Insert/Delete: average O(logn) worst case O(n), Space O(n)
  */
 public class BinarySearchTree {
 	BSTNode root;

@@ -31,7 +31,7 @@ NB: Items with links are done, without links are TODO :)
 
 * [Hash Table](http://en.wikipedia.org/wiki/Hash_table)
 * [Binary Heap](http://en.wikipedia.org/wiki/Binary_heap)
-* Binary Search Tree
+* [Binary Search Tree](http://en.wikipedia.org/wiki/Binary_search_tree)
 * Graphs
 
 ### String problems
