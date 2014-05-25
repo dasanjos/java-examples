@@ -61,7 +61,7 @@ public class BinaryHeap {
 		return min;
 	}
 
-	// Review PercDown and PercUp
+	// TODO: Review PercDown and PercUp
 	// http://courses.cs.washington.edu/courses/cse373/02au/lectures/lecture11l.pdf
 	private void percolateDown() {
 		int index = 1;
@@ -105,4 +105,6 @@ public class BinaryHeap {
 			return rightChild;
 		}
 	}
+	
+	//TODO heapify (build heap from array input)
 }

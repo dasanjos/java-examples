@@ -2,12 +2,11 @@ java-examples
 =============
 
 Java implementation of algorithms, several puzzles and programming test tasks (with JUnit tests). 
-NB: Items with links are done, without links are TODO :)
 
 ### Java Language
 
-* Java Collections: Stack, Map, List, Set, Queue, HashMap - http://www.javapractices.com/topic/TopicAction.do?Id=65
-* Bits and Bytes
+* TODO Java Collections: Stack, Map, List, Set, Queue, HashMap - http://www.javapractices.com/topic/TopicAction.do?Id=65
+* TODO Bits and Bytes
 
 ### Math problems:
 
@@ -22,7 +21,7 @@ NB: Items with links are done, without links are TODO :)
 ### Sorting & Searching:
 
 * [Bubble Sort](http://en.wikipedia.org/wiki/Bubble_sort) 
-* Heap Sort - http://en.wikipedia.org/wiki/Heapsort
+* [Heap Sort](http://en.wikipedia.org/wiki/Heapsort)
 * [Merge Sort](http://en.wikipedia.org/wiki/Merge_sort) 
 * [Quick Sort](http://en.wikipedia.org/wiki/Quick_Sort) 
 * [Binary Search](http://en.wikipedia.org/wiki/Binary_search_algorithm)
@@ -32,12 +31,14 @@ NB: Items with links are done, without links are TODO :)
 * [Hash Table](http://en.wikipedia.org/wiki/Hash_table)
 * [Binary Heap](http://en.wikipedia.org/wiki/Binary_heap)
 * [Binary Search Tree](http://en.wikipedia.org/wiki/Binary_search_tree)
+* Red Black Tree
+* B-tree
 * Graphs
 
 ### String problems
 
 * [String matching](http://en.wikipedia.org/wiki/String_searching_algorithm)
-*
+
 
 ### Puzzles and Tests:
 
