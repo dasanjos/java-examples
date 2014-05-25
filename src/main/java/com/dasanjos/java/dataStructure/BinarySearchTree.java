@@ -178,9 +178,69 @@ public class BinarySearchTree {
 	public void print() {
 		root.print("", true);
 	}
+
+	public boolean delete(int data) {
+		return delete(root, data);
+	}
+
+	private boolean delete(BSTNode start, int data) {
+		// Search for data and set parent
+		BSTNode parent, focus;
+		parent = focus = start;
+		boolean isLeftNode = false;
+		while (focus != null && focus.data != data) {
+			if (data < focus.data) {
+				parent = focus;
+				focus = focus.left;
+				isLeftNode = true;
+			} else {
+				parent = focus;
+				focus = focus.right;
+				isLeftNode = false;
+			}
+		}
+
+		// return false if not found
+		if (focus == null) {
+			return false;
+		}
+
+		if (focus.left == null && focus.right == null) {
+			// Remove Leaf Node
+			if (isLeftNode) {
+				parent.left = null;
+			} else {
+				parent.right = null;
+			}
+			return true;
+		} else if (focus.left == null) {
+			// Remove node with one right child
+			if (isLeftNode) {
+				parent.left = focus.right;
+			} else {
+				parent.right = focus.right;
+			}
+			return true;
+		} else if (focus.right == null) {
+			// Remove node with one left child
+			if (isLeftNode) {
+				parent.left = focus.left;
+			} else {
+				parent.right = focus.left;
+			}
+			return true;
+		} else {
+			// Remove node with two children:
+			// Replace by min right child and remove it recursively
+			BSTNode minRightChild = focus.right.minChild();
+			focus.data = minRightChild.data;
+			delete(focus.right, minRightChild.data);
+			return true;
+		}
+	}
 }
 
-// TODO use generics for data
+// TODO use Generics for data
 class BSTNode {
 	int data;
 	BSTNode left;
@@ -193,6 +253,14 @@ class BSTNode {
 	@Override
 	public String toString() {
 		return "<" + data + ">";
+	}
+
+	BSTNode minChild() {
+		BSTNode focus = this;
+		while (focus.left != null) {
+			focus = focus.left;
+		}
+		return focus;
 	}
 
 	void print(String prefix, boolean isLast) {

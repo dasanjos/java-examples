@@ -65,8 +65,59 @@ public class BinarySearchTreeTest extends TimeTracker {
 	}
 
 	@Test
-	public void deleteNode() {
-		Assert.fail("not implemented");
+	public void deleteLeafNodes() {
+		insertElementsIterative();
+
+		Assert.assertTrue(bst.delete(8));
+		Assert.assertTrue(bst.isBinarySearchTree());
+
+		Assert.assertTrue(bst.delete(6));
+		Assert.assertTrue(bst.isBinarySearchTree());
+	}
+
+	@Test
+	public void deleteNodesWithOneChild() {
+		insertElementsIterative();
+		bst.insertIterative(7);
+		bst.insertIterative(11);
+
+		Assert.assertTrue(bst.delete(8));
+		Assert.assertTrue(bst.isBinarySearchTree());
+
+		Assert.assertTrue(bst.delete(10));
+		Assert.assertTrue(bst.isBinarySearchTree());
+	}
+
+	@Test
+	public void deleteNodesWithTwoChildren() {
+		insertElementsIterative();
+
+		Assert.assertTrue(bst.delete(9));
+		Assert.assertTrue(bst.isBinarySearchTree());
+		
+		Assert.assertTrue(bst.delete(5));
+		Assert.assertTrue(bst.isBinarySearchTree());
+	}
+
+	@Test
+	public void deleteRootWithTwoChildren() {
+		insertElementsIterative();
+
+		Assert.assertTrue(bst.delete(7));
+		Assert.assertTrue(bst.isBinarySearchTree());
+	}
+
+	@Test
+	public void findMinNode() {
+		insertElementsIterative();
+
+		BSTNode min = bst.root.minChild();
+		Assert.assertNotNull(min);
+		Assert.assertEquals("<4>", min.toString());
+
+		min = bst.root.right.minChild();
+		Assert.assertNotNull(min);
+		Assert.assertEquals("<8>", min.toString());
 	}
 
 	@Test
