@@ -9,8 +9,8 @@ import java.util.Queue;
  * A binary tree is a tree where each node has up to two leaves. A binary search
  * tree is a binary tree where the left child contains nodes with values less
  * than the parent node and where the right child only contains nodes with
- * values greater than or equal to the parent.
- * 
+ * values greater than or equal to the parent. <br>
+ * Complexity: Space O(n), findMin O(logn), insert O(logn), delete O(logn)
  */
 public class BinarySearchTree {
 	BSTNode root;
@@ -46,7 +46,7 @@ public class BinarySearchTree {
 		} else {
 			BSTNode focus = root;
 			BSTNode parent;
-			// remove infinite loop
+			// TODO remove infinite loop
 			while (true) {
 				parent = focus;
 				if (data < focus.data) {
@@ -177,6 +177,13 @@ public class BinarySearchTree {
 
 	public void print() {
 		root.print("", true);
+	}
+
+	public BSTNode findMin() {
+		if (root != null) {
+			return root.minChild();
+		}
+		return null;
 	}
 
 	public boolean delete(int data) {

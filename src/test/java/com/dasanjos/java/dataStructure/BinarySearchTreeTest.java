@@ -94,7 +94,7 @@ public class BinarySearchTreeTest extends TimeTracker {
 
 		Assert.assertTrue(bst.delete(9));
 		Assert.assertTrue(bst.isBinarySearchTree());
-		
+
 		Assert.assertTrue(bst.delete(5));
 		Assert.assertTrue(bst.isBinarySearchTree());
 	}
@@ -111,7 +111,7 @@ public class BinarySearchTreeTest extends TimeTracker {
 	public void findMinNode() {
 		insertElementsIterative();
 
-		BSTNode min = bst.root.minChild();
+		BSTNode min = bst.findMin();
 		Assert.assertNotNull(min);
 		Assert.assertEquals("<4>", min.toString());
 
