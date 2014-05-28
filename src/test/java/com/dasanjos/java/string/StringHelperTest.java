@@ -10,8 +10,8 @@ public class StringHelperTest {
 	public void reverseString() {
 		assertEquals("tupni le", StringHelper.reverse("el input"));
 
-		assertEquals("!daM m’I ,timmaD",
-				StringHelper.reverse("Dammit, I’m Mad!"));
+		assertEquals("!daM m'I ,timmaD",
+				StringHelper.reverse("Dammit, I'm Mad!"));
 
 		assertEquals("amanaP - lanaC A ,nalP A ,naM A",
 				StringHelper.reverse("A Man, A Plan, A Canal - Panama"));
@@ -23,8 +23,8 @@ public class StringHelperTest {
 				new String(
 						StringHelper.reverseInPlace("el input".toCharArray())));
 
-		assertEquals("!daM m’I ,timmaD",
-				new String(StringHelper.reverseInPlace("Dammit, I’m Mad!"
+		assertEquals("!daM m'I ,timmaD",
+				new String(StringHelper.reverseInPlace("Dammit, I'm Mad!"
 						.toCharArray())));
 		
 		assertEquals("amanaP - lanaC A ,nalP A ,naM A",
@@ -36,8 +36,8 @@ public class StringHelperTest {
 	@Test
 	public void reverseWords() {
 		assertEquals("input el", StringHelper.reverseWords("el input"));
-		assertEquals("Mad! I’m Dammit,",
-				StringHelper.reverseWords("Dammit, I’m Mad!"));
+		assertEquals("Mad! I'm Dammit,",
+				StringHelper.reverseWords("Dammit, I'm Mad!"));
 		assertEquals("Panama - Canal A Plan, A Man, A",
 				StringHelper.reverseWords("A Man, A Plan, A Canal - Panama"));
 	}
